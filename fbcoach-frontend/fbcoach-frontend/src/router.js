@@ -11,6 +11,8 @@ import EditTraining from './components/EditTraining.vue'
 import ListPlayers from './components/ListPlayers.vue'
 import PlayerDetails from './components/PlayerDetails.vue'
 import EditPlayer from './components/EditPlayer.vue'
+import ListAttendance from './components/ListAttendance.vue'
+import EditAttendance from './components/EditAttendance.vue'
 
 const routes = [
   {
@@ -34,32 +36,32 @@ const routes = [
     component: Reports
   },
   {
-    path: '/edit-report/:id', // Add route for editing report
+    path: '/edit-report/:id',
     name: 'EditReport',
     component: EditReport
   },
   {
-    path: '/edit-team/:id', // Add route for editing team
+    path: '/edit-team/:id',
     name: 'EditTeam',
     component: EditTeam
   },
   {
-    path: '/list-training/:teamId', // Add route for listing trainings
+    path: '/list-training/:teamId',
     name: 'ListTraining',
     component: ListTraining
   },
   {
-    path: '/edit-training/:id', // Add route for editing training
+    path: '/edit-training/:id',
     name: 'EditTraining',
     component: EditTraining
   },
   {
-    path: '/list-players/:teamId', // Add route for listing trainings
+    path: '/list-players/:teamId', 
     name: 'ListPlayers',
     component: ListPlayers
   },
   {
-    path: '/player-details/:id', // Add route for listing trainings
+    path: '/player-details/:id',
     name: 'PlayerDetails',
     component: PlayerDetails
   },
@@ -67,6 +69,16 @@ const routes = [
     path: '/edit-player/:id',
     name: 'EditPlayer',
     component: EditPlayer
+  },
+  {
+    path: '/list-attendance/:playerId',
+    name: 'ListAttendance',
+    component: ListAttendance
+  },
+  {
+    path: '/edit-attendance/:id',
+    name: 'EditAttendance',
+    component: EditAttendance
   },
   {
     path: '/:catchAll(.*)',

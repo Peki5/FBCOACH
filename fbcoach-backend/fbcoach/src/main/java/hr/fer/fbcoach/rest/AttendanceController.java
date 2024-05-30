@@ -54,10 +54,10 @@ public class AttendanceController {
     }
 
     @GetMapping("/player/{playerId}")
-    public List<AttendanceDTO> getHealthStatusesByPlayerId(@PathVariable Long playerId) {
+    public List<AttendanceDTO> getAttendanceByPlayerId(@PathVariable Long playerId) {
         List<Attendance> attendances = attendanceService.getAttendanceByPlayerId(playerId);
         return attendances.stream()
-                .sorted(Comparator.comparing(Attendance::getIdAttendance))
+                .sorted(Comparator.comparing(Attendance::getDate).reversed())
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }

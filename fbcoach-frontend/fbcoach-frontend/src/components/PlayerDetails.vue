@@ -67,7 +67,7 @@ export default {
             this.$router.push({ name: 'HealthStatus', params: { playerId: id } });
         },
         navigateToAttendance(id) {
-            this.$router.push({ name: 'Attendance', params: { playerId: id } });
+            this.$router.push({ name: 'ListAttendance', params: { playerId: id } });
         }
     }
 };
