@@ -41,8 +41,4 @@ public class MatchServiceJpa implements MatchService {
     public void deleteMatch(Long id) {
         matchRepository.deleteById(id);
     }
-
-    public List<Match> getMatchesByTeamRosterId(Long teamRosterId) {
-        return matchRepository.findByTeamRosterId_IdTeamRoster(teamRosterId);
-    }
 }

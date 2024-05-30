@@ -65,25 +65,32 @@ public class TeamController {
 
     private TeamDTO convertToDto(Team team) {
         TeamDTO teamDTO = modelMapper.map(team, TeamDTO.class);
-        teamDTO.setCoachId(team.getCoach().getIdKorisnika()); // Assuming getId() is the method to get coach's ID
+        teamDTO.setCoachId(team.getCoach().getIdKorisnika());
 
         teamDTO.setTrainingIds(team.getTrainings() != null ?
                 team.getTrainings().stream()
-                        .filter(training -> training.getTeamId().equals(team.getIdTeam()))
+                        .filter(training -> training.getTeamId().getIdTeam().equals(team.getIdTeam()))
                         .map(Training::getIdTraining)
-                        .collect(Collectors.toList()) : new ArrayList<>()); // Assuming getIdTraining() is the method to get training ID
+                        .collect(Collectors.toList()) : new ArrayList<>());
 
-        teamDTO.setTeamRosterIds(team.getTeamRosters() != null ?
-                team.getTeamRosters().stream()
-                        .filter(teamRoster -> teamRoster.getTeamId().equals(team.getIdTeam()))
-                        .map(TeamRoster::getIdTeamRoster)
-                        .collect(Collectors.toList()) : new ArrayList<>()); // Assuming getIdTeamRoster() is the method to get teamRoster ID
+        teamDTO.setPlayerIds(team.getPlayers() != null ?
+                team.getPlayers().stream()
+                        .filter(player -> player.getTeams().stream()
+                                .anyMatch(t -> t.getIdTeam().equals(team.getIdTeam())))
+                        .map(Player::getIdPlayer)
+                        .collect(Collectors.toList()) : new ArrayList<>());
 
-        teamDTO.setTacticsApplicationIds(team.getTacticsApplications() != null ?
-                team.getTacticsApplications().stream()
-                        .filter(tacticsApplication -> tacticsApplication.getTeamId().equals(team.getIdTeam()))
-                        .map(TacticsApplication::getIdTacticsApplication)
-                        .collect(Collectors.toList()) : new ArrayList<>()); // Assuming getIdTacticsApplication() is the method to get tacticsApplication ID
+        teamDTO.setMatchIds(team.getMatches() != null ?
+                team.getMatches().stream()
+                        .filter(match -> match.getTeamId().getIdTeam().equals(team.getIdTeam()))
+                        .map(Match::getIdMatch)
+                        .collect(Collectors.toList()) : new ArrayList<>());
+
+        teamDTO.setTacticIds(team.getTactics() != null ?
+                team.getTactics().stream()
+                        .filter(tactics -> tactics.getTeamId().getIdTeam().equals(team.getIdTeam()))
+                        .map(Tactics::getIdTactics)
+                        .collect(Collectors.toList()) : new ArrayList<>());
 
         return teamDTO;
     }

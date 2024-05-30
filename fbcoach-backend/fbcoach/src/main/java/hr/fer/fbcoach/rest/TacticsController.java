@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/tactics")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class TacticsController {
 
     private final TacticsService tacticsService;
@@ -65,6 +66,9 @@ public class TacticsController {
         tacticsDTO.setIdTactics(tactics.getIdTactics());
         tacticsDTO.setName(tactics.getName());
         tacticsDTO.setDescription(tactics.getDescription());
+        if (tactics.getTeamId() != null) {
+            tacticsDTO.setTeamId(tactics.getTeamId().getIdTeam());
+        }
         tacticsDTO.setTacticsApplicationsIds(tactics.getTacticsApplications() != null ?
                 tactics.getTacticsApplications().stream()
                         .map(TacticsApplication::getIdTacticsApplication)

@@ -13,5 +13,4 @@ public class TacticsApplicationDTO {
     private Long idTacticsApplication;
     private Long tacticsId;
     private Long matchId;
-    private Long teamId;
 }

@@ -18,6 +18,7 @@ public class MatchDTO {
     private String opponent;
     private String location;
     private String result;
-    private Long teamRosterId;
+    private Long teamId;
+    private List<Long> playerMatchStatsIds;
     private List<Long> tacticsApplicationIds;
 }

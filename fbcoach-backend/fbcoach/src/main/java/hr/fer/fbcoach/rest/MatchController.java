@@ -1,8 +1,8 @@
 package hr.fer.fbcoach.rest;
 
 import hr.fer.fbcoach.model.Match;
-import hr.fer.fbcoach.model.Report;
 import hr.fer.fbcoach.model.TacticsApplication;
+import hr.fer.fbcoach.model.PlayerMatchStats;
 import hr.fer.fbcoach.model.dto.MatchDTO;
 import hr.fer.fbcoach.service.MatchService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/matches")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class MatchController {
 
     private final MatchService matchService;
@@ -59,13 +60,13 @@ public class MatchController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/teamRoster/{teamRosterId}")
-    public List<MatchDTO> getMatchesByTeamRosterId(@PathVariable Long teamRosterId) {
-        List<Match> matches = matchService.getMatchesByTeamRosterId(teamRosterId);
-        return matches.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
-    }
+//    @GetMapping("/teamRoster/{teamRosterId}")
+//    public List<MatchDTO> getMatchesByTeamRosterId(@PathVariable Long teamRosterId) {
+//        List<Match> matches = matchService.getMatchesByTeamRosterId(teamRosterId);
+//        return matches.stream()
+//                .map(this::convertToDto)
+//                .collect(Collectors.toList());
+//    }
 
     private MatchDTO convertToDto(Match match) {
         MatchDTO matchDTO = new MatchDTO();
@@ -74,11 +75,14 @@ public class MatchController {
         matchDTO.setOpponent(match.getOpponent());
         matchDTO.setLocation(match.getLocation());
         matchDTO.setResult(match.getResult());
-
-        // Manually set teamRosterId and tacticsApplicationIds
-        if (match.getTeamRosterId() != null) {
-            matchDTO.setTeamRosterId(match.getTeamRosterId().getIdTeamRoster());
+        if (match.getTeamId() != null) {
+            matchDTO.setTeamId(match.getTeamId().getIdTeam());
         }
+
+        matchDTO.setPlayerMatchStatsIds(match.getPlayerMatchStats() != null ?
+                match.getPlayerMatchStats().stream()
+                        .map(PlayerMatchStats::getIdTeamRoster)
+                        .collect(Collectors.toList()) : new ArrayList<>());
 
         matchDTO.setTacticsApplicationIds(match.getTacticsApplications() != null ?
                 match.getTacticsApplications().stream()

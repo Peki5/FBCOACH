@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "healthStatus")
+@Table(name = "health_status")
 public class HealthStatus {
 
     @Id

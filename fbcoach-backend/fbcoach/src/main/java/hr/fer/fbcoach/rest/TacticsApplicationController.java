@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/tacticsApplication")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class TacticsApplicationController {
 
     private final TacticsApplicationService tacticsApplicationService;
@@ -45,14 +46,6 @@ public class TacticsApplicationController {
     @GetMapping("/tactics/{tacticsId}")
     public List<TacticsApplicationDTO> getTacticsApplicationsByTacticsId(@PathVariable Long tacticsId) {
         List<TacticsApplication> tacticsApplications = tacticsApplicationService.getTacticsApplicationsByTacticsId(tacticsId);
-        return tacticsApplications.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/team/{teamId}")
-    public List<TacticsApplicationDTO> getTacticsApplicationsByTeamId(@PathVariable Long teamId) {
-        List<TacticsApplication> tacticsApplications = tacticsApplicationService.getTacticsApplicationsByTeamId(teamId);
         return tacticsApplications.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());

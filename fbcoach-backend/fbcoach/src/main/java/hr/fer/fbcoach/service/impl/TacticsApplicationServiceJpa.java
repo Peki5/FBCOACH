@@ -32,7 +32,6 @@ public class TacticsApplicationServiceJpa implements TacticsApplicationService {
         TacticsApplication tacticsApplication = getTacticsApplicationById(id);
         tacticsApplication.setTacticsId(tacticsApplicationDetails.getTacticsId());
         tacticsApplication.setMatchId(tacticsApplicationDetails.getMatchId());
-        tacticsApplication.setTeamId(tacticsApplicationDetails.getTeamId());
         return tacticsApplicationRepository.save(tacticsApplication);
     }
 
@@ -47,9 +46,5 @@ public class TacticsApplicationServiceJpa implements TacticsApplicationService {
 
     public List<TacticsApplication> getTacticsApplicationsByTacticsId(Long tacticsId) {
         return tacticsApplicationRepository.findByTacticsId_IdTactics(tacticsId);
-    }
-
-    public List<TacticsApplication> getTacticsApplicationsByTeamId(Long teamId) {
-        return tacticsApplicationRepository.findByTeamId_IdTeam(teamId);
     }
 }

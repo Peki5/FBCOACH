@@ -1,5 +1,6 @@
 package hr.fer.fbcoach.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import hr.fer.fbcoach.model.util.Position;
 import jakarta.persistence.*;
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "reports")
+@Table(name = "player")
 public class Player {
 
     @Id
@@ -42,9 +43,13 @@ public class Player {
     @Column(name = "weight")
     private int weight;
 
+    @JsonBackReference
+    @ManyToMany(mappedBy = "players")
+    private List<Team> teams;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "playerId")
-    private List<TeamRoster> teamRosters;
+    private List<PlayerMatchStats> playerMatchStats;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "playerId")

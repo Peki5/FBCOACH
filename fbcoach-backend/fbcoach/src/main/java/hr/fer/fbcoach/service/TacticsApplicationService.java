@@ -12,7 +12,6 @@ public interface TacticsApplicationService {
     void deleteTacticsApplication(Long id);
     List<TacticsApplication> getTacticsApplicationsByMatchId(Long matchId);
     List<TacticsApplication> getTacticsApplicationsByTacticsId(Long tacticsId);
-    List<TacticsApplication> getTacticsApplicationsByTeamId(Long teamId);
 
 
 

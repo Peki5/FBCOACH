@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tacticsApplication")
+@Table(name = "tactics_application")
 public class TacticsApplication {
 
     @Id
@@ -19,15 +19,11 @@ public class TacticsApplication {
     @Column(name = "id_tactic_application")
     private Long idTacticsApplication;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_tactics")
     private Tactics tacticsId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_match")
     private Match matchId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_team")
-    private Team teamId;
 }

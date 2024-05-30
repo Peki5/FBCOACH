@@ -40,11 +40,20 @@ public class Team {
     private List<Training> trainings;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "teamId")
-    private List<TeamRoster> teamRosters;
+    @ManyToMany
+    @JoinTable(
+            name = "team_players",
+            joinColumns = @JoinColumn(name = "id_team"),
+            inverseJoinColumns = @JoinColumn(name = "id_player")
+    )
+    private List<Player> players;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "teamId", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TacticsApplication> tacticsApplications;
+    @OneToMany(mappedBy = "teamId")
+    private List<Match> matches;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "teamId")
+    private List<Tactics> tactics;
 
 }

@@ -11,11 +11,11 @@
               <span class="block w-full text-xl font-bold mt-4 mb-4">Dodaj novi izvještaj</span>
               <form @submit.prevent="addNewReport" class="mb-4">
                 <div class="mb-4 md:w-full">
-                  <label class="block text-xs mb-1">Datum</label>
+                  <label class="block text-s mb-1">Datum</label>
                   <input v-model="newReport.date" type="date" required class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
                 </div>
                 <div class="mb-4 md:w-full">
-                  <label class="block text-xs mb-1">Opis</label>
+                  <label class="block text-s mb-1">Opis</label>
                   <textarea v-model="newReport.description" required class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300"></textarea>
                 </div>
                 <button class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
@@ -29,7 +29,7 @@
   
       <!-- List of Reports Section -->
       <div v-else class="container mt-4 text-black bg-white rounded">
-        <div class="pt-4 mb-8 relative">
+        <div class="pt-4 pb-2 mb-8 relative">
           <div>
             <h1 class="text-2xl py-2 px-1">Izvještaji</h1>
             <button @click="toggleAdd" class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">

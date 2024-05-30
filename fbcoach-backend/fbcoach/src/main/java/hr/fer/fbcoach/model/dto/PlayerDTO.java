@@ -21,7 +21,8 @@ public class PlayerDTO {
     private Position position;
     private int height;
     private int weight;
-    private List<Long> teamRosterIds;
+    private List<Long> teamIds;
+    private List<Long> playerMatchStatsIds;
     private List<Long> healthStatusIds;
     private List<Long> attendanceIds;
 }

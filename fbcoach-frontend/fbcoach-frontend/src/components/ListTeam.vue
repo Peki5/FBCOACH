@@ -12,12 +12,12 @@
             <span class="block w-full text-xl font-bold mt-4 mb-4">Dodaj novi tim</span>
             <form @submit.prevent="dodajNoviTim" class="mb-4">
               <div class="mb-4 md:w-full">
-                <label class="block text-xs mb-1">Ime tima</label>
+                <label class="block text-s mb-1">Ime tima</label>
                 <input v-model="noviTim.teamName" type="text" required
                   class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
               </div>
               <div class="mb-4 md:w-full">
-                <label class="block text-xs mb-1">Sezona</label>
+                <label class="block text-s mb-1">Sezona</label>
                 <input v-model="noviTim.season" type="text" required
                   class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
               </div>
@@ -33,7 +33,7 @@
 
     <!-- List of Teams Section -->
     <div v-else class="container mt-4 text-black bg-white rounded">
-      <div class="pt-4 mb-8 relative">
+      <div class="pt-4 pb-2 mb-8 relative">
         <div class="">
           <h1 class="text-2xl py-2 px-1">Timovi</h1>
           <button @click="toggleDodaj"
@@ -51,12 +51,16 @@
                   <p class="text-gray-700 text-base">
                     Sezona: {{ tim.season }}
                   </p>
-                  <button @click="obrisiTim(tim.idTeam)"
-                    class="bg-red-500 hover:bg-red-400 text-white text-sm font-semibold px-4 py-2 rounded">
-                    Delete
-                  </button>
-                  <button @click="navigateToEditPage(tim.idTeam)" class="bg-yellow-500 hover:bg-yellow-400 text-white text-sm font-semibold px-4 py-2 rounded">Edit</button>
-                  <button @click="navigateToTrainings(tim.idTeam)" class="bg-blue-500 hover:bg-blue-400 text-white text-sm font-semibold px-4 py-2 rounded">Trainings</button>
+                  <div class="py-2">
+                    <button @click="navigateToPlayers(tim.idTeam)" class="bg-blue-500 hover:bg-blue-400 text-white text-sm font-semibold px-4 py-2 rounded">Squad</button>
+                  </div>
+                  <div>
+                    <button @click="navigateToEditPage(tim.idTeam)" class="bg-yellow-500 hover:bg-yellow-400 text-white text-sm font-semibold px-4 py-2 rounded">Edit</button>
+                    <button @click="obrisiTim(tim.idTeam)"
+                      class="bg-red-500 hover:bg-red-400 text-white text-sm font-semibold px-4 py-2 rounded">
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -142,8 +146,8 @@ export default {
     navigateToEditPage(id) {
       this.$router.push({ name: 'EditTeam', params: { id: id } });
     },
-    navigateToTrainings(id) {
-      this.$router.push({ name: 'ListTraining', params: { teamId: id } });
+    navigateToPlayers(id) {
+      this.$router.push({ name: 'ListPlayers', params: { teamId: id } });
     }
   },
 };

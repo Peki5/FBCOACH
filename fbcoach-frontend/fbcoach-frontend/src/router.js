@@ -4,10 +4,13 @@ import Login from './components/Login.vue'
 import Register from './components/Register.vue'
 import ListTeam from './components/ListTeam.vue'
 import Reports from './components/Reports.vue'
-import EditReport from './components/EditReport.vue' // Import EditReport component
-import EditTeam from './components/EditTeam.vue' // Import EditTeam component
-import ListTraining from './components/ListTraining.vue' // Import ListTraining component
-import EditTraining from './components/EditTraining.vue' // Import EditTraining component
+import EditReport from './components/EditReport.vue'
+import EditTeam from './components/EditTeam.vue'
+import ListTraining from './components/ListTraining.vue'
+import EditTraining from './components/EditTraining.vue'
+import ListPlayers from './components/ListPlayers.vue'
+import PlayerDetails from './components/PlayerDetails.vue'
+import EditPlayer from './components/EditPlayer.vue'
 
 const routes = [
   {
@@ -49,6 +52,21 @@ const routes = [
     path: '/edit-training/:id', // Add route for editing training
     name: 'EditTraining',
     component: EditTraining
+  },
+  {
+    path: '/list-players/:teamId', // Add route for listing trainings
+    name: 'ListPlayers',
+    component: ListPlayers
+  },
+  {
+    path: '/player-details/:id', // Add route for listing trainings
+    name: 'PlayerDetails',
+    component: PlayerDetails
+  },
+  {
+    path: '/edit-player/:id',
+    name: 'EditPlayer',
+    component: EditPlayer
   },
   {
     path: '/:catchAll(.*)',

@@ -81,9 +81,8 @@ public class TrainingController {
 
 
     private Training convertToEntity(TrainingDTO trainingDTO) {
-        Training training = modelMapper.map(trainingDTO, Training.class);
         // If you need to set the Team object, you can do it here
         // training.setTeamId(teamService.findTeamById(trainingDTO.getTeamId()));
-        return training;
+        return modelMapper.map(trainingDTO, Training.class);
     }
 }

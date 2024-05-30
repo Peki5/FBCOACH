@@ -16,5 +16,6 @@ public class TacticsDTO {
     private Long idTactics;
     private String name;
     private String description;
-    List<Long> tacticsApplicationsIds;
+    private Long teamId;
+    private List<Long> tacticsApplicationsIds;
 }

@@ -18,6 +18,7 @@ public class TeamDTO {
     private String season;
     private Long coachId;
     private List<Long> trainingIds;
-    private List<Long> teamRosterIds;
-    private List<Long> tacticsApplicationIds;
+    private List<Long> playerIds;
+    private List<Long> matchIds;
+    private List<Long> tacticIds;
 }

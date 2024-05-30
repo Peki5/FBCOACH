@@ -18,6 +18,7 @@ class RequestHandler {
     }
 
     getRequest(address) {
+        console.log(address)
         return axios.get(address, {
           headers: {
             'Authorization': 'Bearer ' + JSON.parse(sessionStorage.getItem("user")).token
@@ -49,6 +50,7 @@ class RequestHandler {
     }
 
     deleteRequest(address) {
+        console.log(address)
         return axios.delete(address, {
             headers: {
                 'Authorization': 'Bearer ' + JSON.parse(sessionStorage.getItem("user")).token,

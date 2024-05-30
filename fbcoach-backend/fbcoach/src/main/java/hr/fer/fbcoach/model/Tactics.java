@@ -1,5 +1,7 @@
 package hr.fer.fbcoach.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +29,12 @@ public class Tactics {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "tacticsId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_team")
+    private Team teamId;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "tacticsId")
     private List<TacticsApplication> tacticsApplications;
 }
