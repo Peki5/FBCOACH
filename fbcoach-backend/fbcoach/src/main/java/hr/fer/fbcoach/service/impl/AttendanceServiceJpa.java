@@ -32,7 +32,7 @@ public class AttendanceServiceJpa implements AttendanceService {
     public Attendance updateAttendance(Long id, Attendance attendanceDetails) {
         return attendanceRepository.findById(id).map(attendance -> {
             attendance.setDate(attendanceDetails.getDate());
-            attendance.setPresent(attendanceDetails.isPresent());
+            attendance.setPresent(attendanceDetails.getPresent());
             attendance.setType(attendanceDetails.getType());
             attendance.setPlayerId(attendanceDetails.getPlayerId());
             return attendanceRepository.save(attendance);

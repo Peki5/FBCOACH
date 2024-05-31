@@ -3,6 +3,7 @@ import axios from 'axios';
 class RequestHandler {
 
     postRequest(address, data) {
+        console.log(address)
         return axios.post(address, data, {
             headers: {
                 'Authorization': 'Bearer ' + JSON.parse(sessionStorage.getItem("user")).token
@@ -35,6 +36,7 @@ class RequestHandler {
     }
 
     putRequest(address, data) {
+        console.log(address)
         return axios.put(address, data, {
             headers: {
                 'Authorization': 'Bearer ' + JSON.parse(sessionStorage.getItem("user")).token

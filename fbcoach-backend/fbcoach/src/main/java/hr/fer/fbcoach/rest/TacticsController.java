@@ -1,8 +1,10 @@
 package hr.fer.fbcoach.rest;
 
 import hr.fer.fbcoach.model.Match;
+import hr.fer.fbcoach.model.Player;
 import hr.fer.fbcoach.model.Tactics;
 import hr.fer.fbcoach.model.TacticsApplication;
+import hr.fer.fbcoach.model.dto.PlayerDTO;
 import hr.fer.fbcoach.model.dto.TacticsDTO;
 import hr.fer.fbcoach.service.TacticsService;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +27,19 @@ public class TacticsController {
     private final TacticsService tacticsService;
     private final ModelMapper modelMapper;
 
-    @GetMapping("")
+    @GetMapping("/all")
     public List<TacticsDTO> listAll() {
         List<Tactics> tacticsList = tacticsService.getAllTactics();
         return tacticsList.stream()
+                .sorted(Comparator.comparing(Tactics::getIdTactics))
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("")
+    public List<TacticsDTO> getAllTacticsByTeamId(@RequestParam Long teamId) {
+        List<Tactics> tactics = tacticsService.getAllTacticsByTeamId(teamId);
+        return tactics.stream()
                 .sorted(Comparator.comparing(Tactics::getIdTactics))
                 .map(this::convertToDto)
                 .collect(Collectors.toList());

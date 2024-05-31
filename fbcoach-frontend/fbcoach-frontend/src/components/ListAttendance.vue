@@ -17,11 +17,10 @@
                     class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
                 </div>
                 <div class="mb-4 md:w-full">
-                  <label class="block text-xs mb-1">Prisutan</label>
-                  <select v-model="novoPrisustvo.isPresent" required
+                  <label class="block text-xs mb-1">Prisutnost</label>
+                  <select v-model="novoPrisustvo.present" required
                     class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300">
-                    <option :value="true">Da</option>
-                    <option :value="false">Ne</option>
+                    <option v-for="present in presentTypes" :key="present" :value="present">{{ present }}</option>
                   </select>
                 </div>
                 <div class="mb-4 md:w-full">
@@ -50,7 +49,7 @@
           <div v-if="attendances.length > 0">
             <div v-for="attendance in attendances" :key="attendance.idAttendance" class="mb-4 p-4 border rounded bg-slate-200">
               <p class="text-gray-700">Datum: {{ formatDate(attendance.date) }}</p>
-              <p class="text-gray-700">Prisutan: {{ attendance.isPresent ? 'Da' : 'Ne' }}</p>
+              <p class="text-gray-700">Prisutan: {{ attendance.present}}</p>
               <p class="text-gray-700">Tip: {{ attendance.type }}</p>
               <div class="flex space-x-2 mt-4">
                 <button @click="navigateToEdit(attendance.idAttendance)" class="bg-yellow-500 hover:bg-yellow-400 text-white text-sm font-semibold px-4 py-2 rounded">Uredi</button>
@@ -77,11 +76,12 @@
         isDodajVisible: false,
         novoPrisustvo: {
           date: "",
-          isPresent: "",
+          present: "",
           type: "",
           playerId: this.$route.params.playerId,
         },
         attendanceTypes: ["MATCH", "TRAINING"], // Example attendance types
+        presentTypes: ["YES", "NO"]
       };
     },
     async mounted() {

@@ -13,6 +13,10 @@ import PlayerDetails from './components/PlayerDetails.vue'
 import EditPlayer from './components/EditPlayer.vue'
 import ListAttendance from './components/ListAttendance.vue'
 import EditAttendance from './components/EditAttendance.vue'
+import ListHealthStatus from './components/ListHealthStatus.vue';
+import EditHealthStatus from './components/EditHealthStatus.vue';
+import ListTactics from './components/ListTactics.vue' // Import ListTactics component
+import EditTactics from './components/EditTactics.vue' // Import EditTactics component
 
 const routes = [
   {
@@ -79,6 +83,26 @@ const routes = [
     path: '/edit-attendance/:id',
     name: 'EditAttendance',
     component: EditAttendance
+  },
+  {
+    path: '/list-health-status/:playerId',
+    name: 'ListHealthStatus',
+    component: ListHealthStatus
+  },
+  {
+    path: '/edit-health-status/:id',
+    name: 'EditHealthStatus',
+    component: EditHealthStatus
+  },
+  {
+    path: '/list-tactics/:teamId', // Add route for listing tactics
+    name: 'ListTactics',
+    component: ListTactics
+  },
+  {
+    path: '/edit-tactics/:id', // Add route for editing tactics
+    name: 'EditTactics',
+    component: EditTactics
   },
   {
     path: '/:catchAll(.*)',

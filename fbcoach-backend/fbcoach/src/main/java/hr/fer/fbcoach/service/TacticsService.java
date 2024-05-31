@@ -11,4 +11,5 @@ public interface TacticsService {
     Tactics addTactics(Tactics tactics);
     Tactics updateTactics(Long id, Tactics tacticsDetails);
     void deleteTactics(Long id);
+    List<Tactics> getAllTacticsByTeamId(Long teamId);
 }

@@ -15,10 +15,9 @@
             </div>
             <div class="mb-4 md:w-full">
               <label class="block text-xs mb-1">Prisutan</label>
-              <select v-model="attendance.isPresent" required
+              <select v-model="attendance.present" required
                 class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300">
-                <option :value="true">Da</option>
-                <option :value="false">Ne</option>
+                <option v-for="present in presentTypes" :key="present" :value="present">{{ present }}</option>
               </select>
             </div>
             <div class="mb-4 md:w-full">
@@ -48,11 +47,12 @@
         attendance: {
           idAttendance: null,
           date: "",
-          isPresent: "",
+          present: "",
           type: "",
           playerId: null,
         },
         attendanceTypes: ["MATCH", "TRAINING"],
+        presentTypes: ["YES", "NO"]
       };
     },
     async mounted() {

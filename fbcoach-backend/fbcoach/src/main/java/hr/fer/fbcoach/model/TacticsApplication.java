@@ -19,6 +19,9 @@ public class TacticsApplication {
     @Column(name = "id_tactic_application")
     private Long idTacticsApplication;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_tactics")
     private Tactics tacticsId;

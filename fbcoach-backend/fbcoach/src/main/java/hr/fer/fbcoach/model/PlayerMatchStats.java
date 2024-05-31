@@ -18,7 +18,7 @@ public class PlayerMatchStats {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_team_roster")
-    private Long idTeamRoster;
+    private Long idPlayerMatchStats;
 
     @Column(name = "goals")
     private int goals;

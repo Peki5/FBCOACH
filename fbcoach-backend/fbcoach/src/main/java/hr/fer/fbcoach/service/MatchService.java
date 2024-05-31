@@ -11,5 +11,5 @@ public interface MatchService {
     Match addMatch(Match match);
     Match updateMatch(Long id, Match matchDetails);
     void deleteMatch(Long id);
-
+    List<Match> getAllMatchesByTeamId(Long teamId);
 }

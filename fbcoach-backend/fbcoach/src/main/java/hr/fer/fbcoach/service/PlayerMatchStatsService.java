@@ -5,13 +5,15 @@ import hr.fer.fbcoach.model.PlayerMatchStats;
 import java.util.List;
 
 public interface PlayerMatchStatsService {
-    List<PlayerMatchStats> getTeamRostersByTeamId(Long teamId);
+    List<PlayerMatchStats> getPlayerMatchStatssByTeamId(Long teamId);
 
-    List<PlayerMatchStats> getTeamRostersByPlayerId(Long playerId);
+    List<PlayerMatchStats> getPlayerMatchStatssByPlayerId(Long playerId);
 
-    PlayerMatchStats createTeamRoster(PlayerMatchStats playerMatchStats);
+    List<PlayerMatchStats> getPlayerMatchStatssByMatchId(Long matchId);
 
-    PlayerMatchStats updateTeamRoster(Long id, PlayerMatchStats playerMatchStats);
+    PlayerMatchStats createPlayerMatchStats(PlayerMatchStats playerMatchStats);
 
-    void deleteTeamRoster(Long id);
+    PlayerMatchStats updatePlayerMatchStats(Long id, PlayerMatchStats playerMatchStats);
+
+    void deletePlayerMatchStats(Long id);
 }

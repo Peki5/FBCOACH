@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TacticsApplicationDTO {
     private Long idTacticsApplication;
+    private String description;
     private Long tacticsId;
     private Long matchId;
 }

@@ -9,4 +9,6 @@ public interface PlayerMatchStatsRepository extends JpaRepository<PlayerMatchSta
     List<PlayerMatchStats> findByTeamId_IdTeam(Long teamId);
 
     List<PlayerMatchStats> findByPlayerId_IdPlayer(Long playerId);
+
+    List<PlayerMatchStats> findByMatchId_IdMatch(Long matchId);
 }

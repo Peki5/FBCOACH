@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PlayerMatchStatsDTO {
-    private Long idTeamRoster;
+    private Long idPlayerMatchStats;
     private int goals;
     private int assists;
     private Long playerId;

@@ -20,6 +20,10 @@ public class TacticsServiceJpa implements TacticsService {
         return tacticsRepository.findAll();
     }
 
+    public List<Tactics> getAllTacticsByTeamId(Long teamId) {
+        return tacticsRepository.findByTeamId_IdTeam(teamId);
+    }
+
     public Optional<Tactics> getTacticsById(Long id) {
         return tacticsRepository.findById(id);
     }

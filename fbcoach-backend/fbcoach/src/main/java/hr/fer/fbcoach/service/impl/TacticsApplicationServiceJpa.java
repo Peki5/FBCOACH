@@ -32,6 +32,7 @@ public class TacticsApplicationServiceJpa implements TacticsApplicationService {
         TacticsApplication tacticsApplication = getTacticsApplicationById(id);
         tacticsApplication.setTacticsId(tacticsApplicationDetails.getTacticsId());
         tacticsApplication.setMatchId(tacticsApplicationDetails.getMatchId());
+        tacticsApplication.setDescription(tacticsApplication.getDescription());
         return tacticsApplicationRepository.save(tacticsApplication);
     }
 

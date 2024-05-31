@@ -75,6 +75,7 @@
         const response = await RequestHandler.getRequest(
           SPRING_URL.concat(`/players/${idPlayer}`)
         );
+        response.dateOfBirth = new Date(response.dateOfBirth).toISOString().split('T')[0];
         console.log("Fetched player for edit:", response);  // Log the response
         this.player = response;
       } catch (error) {

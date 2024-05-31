@@ -2,6 +2,7 @@ package hr.fer.fbcoach.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import hr.fer.fbcoach.model.util.AttendanceType;
+import hr.fer.fbcoach.model.util.PresentType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,8 +27,8 @@ public class Attendance {
     @Column(name = "date")
     private Date date;
 
-    @Column(name = "is_present")
-    private boolean isPresent;
+    @Column(name = "present")
+    private PresentType present;
 
     @Column(name = "type")
     private AttendanceType type;

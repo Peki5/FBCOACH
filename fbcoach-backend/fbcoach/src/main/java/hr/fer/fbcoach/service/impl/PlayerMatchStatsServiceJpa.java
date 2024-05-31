@@ -14,27 +14,29 @@ public class PlayerMatchStatsServiceJpa implements PlayerMatchStatsService {
 
     private final PlayerMatchStatsRepository playerMatchStatsRepository;
 
-    public List<PlayerMatchStats> getTeamRostersByTeamId(Long teamId) {
+    public List<PlayerMatchStats> getPlayerMatchStatssByTeamId(Long teamId) {
         return playerMatchStatsRepository.findByTeamId_IdTeam(teamId);
     }
 
-    public List<PlayerMatchStats> getTeamRostersByPlayerId(Long playerId) {
+    public List<PlayerMatchStats> getPlayerMatchStatssByPlayerId(Long playerId) {
         return playerMatchStatsRepository.findByPlayerId_IdPlayer(playerId);
     }
 
-    @Override
-    public PlayerMatchStats createTeamRoster(PlayerMatchStats playerMatchStats) {
+    public List<PlayerMatchStats> getPlayerMatchStatssByMatchId(Long matchId) {
+        return playerMatchStatsRepository.findByMatchId_IdMatch(matchId);
+    }
+
+    public PlayerMatchStats createPlayerMatchStats(PlayerMatchStats playerMatchStats) {
+        return playerMatchStatsRepository.save(playerMatchStats);
+    }
+
+    public PlayerMatchStats updatePlayerMatchStats(Long id, PlayerMatchStats playerMatchStats) {
+        playerMatchStats.setIdPlayerMatchStats(id);
         return playerMatchStatsRepository.save(playerMatchStats);
     }
 
     @Override
-    public PlayerMatchStats updateTeamRoster(Long id, PlayerMatchStats playerMatchStats) {
-        playerMatchStats.setIdTeamRoster(id);
-        return playerMatchStatsRepository.save(playerMatchStats);
-    }
-
-    @Override
-    public void deleteTeamRoster(Long id) {
+    public void deletePlayerMatchStats(Long id) {
         playerMatchStatsRepository.deleteById(id);
     }
 }

@@ -1,7 +1,9 @@
 package hr.fer.fbcoach.rest;
 
 import hr.fer.fbcoach.model.PlayerMatchStats;
+import hr.fer.fbcoach.model.TacticsApplication;
 import hr.fer.fbcoach.model.dto.PlayerMatchStatsDTO;
+import hr.fer.fbcoach.model.dto.TacticsApplicationDTO;
 import hr.fer.fbcoach.service.PlayerMatchStatsService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -23,48 +25,57 @@ public class PlayerMatchStatsController {
     private final ModelMapper modelMapper;
 
     @GetMapping("team/{teamId}")
-    public ResponseEntity<List<PlayerMatchStatsDTO>> getTeamRostersByTeamId(@PathVariable Long teamId) {
-        List<PlayerMatchStats> playerMatchStats = playerMatchStatsService.getTeamRostersByTeamId(teamId);
+    public ResponseEntity<List<PlayerMatchStatsDTO>> getPlayerMatchStatssByTeamId(@PathVariable Long teamId) {
+        List<PlayerMatchStats> playerMatchStats = playerMatchStatsService.getPlayerMatchStatssByTeamId(teamId);
         List<PlayerMatchStatsDTO> playerMatchStatsDTOS = playerMatchStats.stream()
-                .sorted(Comparator.comparing(PlayerMatchStats::getIdTeamRoster))
+                .sorted(Comparator.comparing(PlayerMatchStats::getIdPlayerMatchStats))
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(playerMatchStatsDTOS);
     }
 
     @GetMapping("player/{playerId}")
-    public ResponseEntity<List<PlayerMatchStatsDTO>> getTeamRostersByPlayerId(@PathVariable Long playerId) {
-        List<PlayerMatchStats> playerMatchStats = playerMatchStatsService.getTeamRostersByPlayerId(playerId);
+    public ResponseEntity<List<PlayerMatchStatsDTO>> getPlayerMatchStatsByPlayerId(@PathVariable Long playerId) {
+        List<PlayerMatchStats> playerMatchStats = playerMatchStatsService.getPlayerMatchStatssByPlayerId(playerId);
         List<PlayerMatchStatsDTO> playerMatchStatsDTOS = playerMatchStats.stream()
-                .sorted(Comparator.comparing(PlayerMatchStats::getIdTeamRoster))
+                .sorted(Comparator.comparing(PlayerMatchStats::getIdPlayerMatchStats))
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(playerMatchStatsDTOS);
     }
 
+    @GetMapping("/match/{matchId}")
+    public List<PlayerMatchStatsDTO> getPlayerMatchStatsByMatchId(@PathVariable Long matchId) {
+        List<PlayerMatchStats> playerMatchStats = playerMatchStatsService.getPlayerMatchStatssByMatchId(matchId);
+        return playerMatchStats.stream()
+                .sorted(Comparator.comparing(PlayerMatchStats::getIdPlayerMatchStats))
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     @PostMapping("/add")
-    public ResponseEntity<PlayerMatchStatsDTO> createTeamRoster(@RequestBody PlayerMatchStatsDTO playerMatchStatsDTO) {
+    public ResponseEntity<PlayerMatchStatsDTO> createPlayerMatchStats(@RequestBody PlayerMatchStatsDTO playerMatchStatsDTO) {
         PlayerMatchStats playerMatchStats = convertToEntity(playerMatchStatsDTO);
-        PlayerMatchStats createdPlayerMatchStats = playerMatchStatsService.createTeamRoster(playerMatchStats);
+        PlayerMatchStats createdPlayerMatchStats = playerMatchStatsService.createPlayerMatchStats(playerMatchStats);
         return ResponseEntity.status(HttpStatus.CREATED).body(convertToDto(createdPlayerMatchStats));
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity<PlayerMatchStatsDTO> updateTeamRoster(@PathVariable Long id, @RequestBody PlayerMatchStatsDTO playerMatchStatsDTO) {
+    public ResponseEntity<PlayerMatchStatsDTO> updatePlayerMatchStats(@PathVariable Long id, @RequestBody PlayerMatchStatsDTO playerMatchStatsDTO) {
         PlayerMatchStats playerMatchStats = convertToEntity(playerMatchStatsDTO);
-        PlayerMatchStats updatedPlayerMatchStats = playerMatchStatsService.updateTeamRoster(id, playerMatchStats);
+        PlayerMatchStats updatedPlayerMatchStats = playerMatchStatsService.updatePlayerMatchStats(id, playerMatchStats);
         return ResponseEntity.ok(convertToDto(updatedPlayerMatchStats));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteTeamRoster(@PathVariable Long id) {
-        playerMatchStatsService.deleteTeamRoster(id);
+    public ResponseEntity<Void> deletePlayerMatchStats(@PathVariable Long id) {
+        playerMatchStatsService.deletePlayerMatchStats(id);
         return ResponseEntity.noContent().build();
     }
 
     private PlayerMatchStatsDTO convertToDto(PlayerMatchStats playerMatchStats) {
         PlayerMatchStatsDTO playerMatchStatsDTO = new PlayerMatchStatsDTO();
-        playerMatchStatsDTO.setIdTeamRoster(playerMatchStats.getIdTeamRoster());
+        playerMatchStatsDTO.setIdPlayerMatchStats(playerMatchStats.getIdPlayerMatchStats());
         playerMatchStatsDTO.setGoals(playerMatchStats.getGoals());
         playerMatchStatsDTO.setAssists(playerMatchStats.getAssists());
 

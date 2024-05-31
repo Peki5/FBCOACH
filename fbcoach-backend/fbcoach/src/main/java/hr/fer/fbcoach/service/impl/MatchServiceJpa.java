@@ -20,6 +20,10 @@ public class MatchServiceJpa implements MatchService {
         return matchRepository.findAll();
     }
 
+    public List<Match> getAllMatchesByTeamId(Long teamId) {
+        return matchRepository.findByTeamId_IdTeam(teamId);
+    }
+
     public Optional<Match> getMatchById(Long id) {
         return matchRepository.findById(id);
     }
