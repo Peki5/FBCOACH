@@ -16,23 +16,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/teamRoster")
+@RequestMapping("/playermatchstats")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173")
 public class PlayerMatchStatsController {
 
     private final PlayerMatchStatsService playerMatchStatsService;
     private final ModelMapper modelMapper;
-
-    @GetMapping("team/{teamId}")
-    public ResponseEntity<List<PlayerMatchStatsDTO>> getPlayerMatchStatssByTeamId(@PathVariable Long teamId) {
-        List<PlayerMatchStats> playerMatchStats = playerMatchStatsService.getPlayerMatchStatssByTeamId(teamId);
-        List<PlayerMatchStatsDTO> playerMatchStatsDTOS = playerMatchStats.stream()
-                .sorted(Comparator.comparing(PlayerMatchStats::getIdPlayerMatchStats))
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(playerMatchStatsDTOS);
-    }
 
     @GetMapping("player/{playerId}")
     public ResponseEntity<List<PlayerMatchStatsDTO>> getPlayerMatchStatsByPlayerId(@PathVariable Long playerId) {

@@ -17,6 +17,9 @@ import ListHealthStatus from './components/ListHealthStatus.vue';
 import EditHealthStatus from './components/EditHealthStatus.vue';
 import ListTactics from './components/ListTactics.vue' // Import ListTactics component
 import EditTactics from './components/EditTactics.vue' // Import EditTactics component
+import ListMatches from './components/ListMatches.vue' // Import ListMatches component
+import MatchDetails from './components/MatchDetails.vue' // Import MatchDetails component
+import EditMatch from './components/EditMatch.vue' // Import EditMatch component
 
 const routes = [
   {
@@ -103,6 +106,21 @@ const routes = [
     path: '/edit-tactics/:id', // Add route for editing tactics
     name: 'EditTactics',
     component: EditTactics
+  },
+  {
+    path: '/list-matches/:teamId', // Add route for listing matches
+    name: 'ListMatches',
+    component: ListMatches
+  },
+  {
+    path: '/match-details/:id', // Add route for match details
+    name: 'MatchDetails',
+    component: MatchDetails
+  },
+  {
+    path: '/edit-match/:id', // Add route for editing match
+    name: 'EditMatch',
+    component: EditMatch
   },
   {
     path: '/:catchAll(.*)',

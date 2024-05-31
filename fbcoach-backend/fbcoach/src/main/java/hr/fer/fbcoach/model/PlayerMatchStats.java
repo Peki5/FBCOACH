@@ -17,7 +17,7 @@ public class PlayerMatchStats {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_team_roster")
+    @Column(name = "id_player_match_stats")
     private Long idPlayerMatchStats;
 
     @Column(name = "goals")
@@ -25,11 +25,6 @@ public class PlayerMatchStats {
 
     @Column(name = "assists")
     private int assists;
-
-    @JsonBackReference
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_team")
-    private Team teamId;
 
     @JsonBackReference
     @ManyToOne(optional = false)

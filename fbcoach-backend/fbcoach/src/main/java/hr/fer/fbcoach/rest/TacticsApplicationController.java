@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/tacticsApplication")
+@RequestMapping("/tacticsapplication")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173")
 public class TacticsApplicationController {

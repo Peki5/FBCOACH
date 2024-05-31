@@ -2,6 +2,7 @@ package hr.fer.fbcoach.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import hr.fer.fbcoach.model.util.LocationType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +32,7 @@ public class Match {
     private String opponent;
 
     @Column(name = "location")
-    private String location;
+    private LocationType location;
 
     @Column(name = "result")
     private String result;

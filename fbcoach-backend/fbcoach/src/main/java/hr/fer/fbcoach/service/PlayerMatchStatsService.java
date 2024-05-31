@@ -5,7 +5,6 @@ import hr.fer.fbcoach.model.PlayerMatchStats;
 import java.util.List;
 
 public interface PlayerMatchStatsService {
-    List<PlayerMatchStats> getPlayerMatchStatssByTeamId(Long teamId);
 
     List<PlayerMatchStats> getPlayerMatchStatssByPlayerId(Long playerId);
 

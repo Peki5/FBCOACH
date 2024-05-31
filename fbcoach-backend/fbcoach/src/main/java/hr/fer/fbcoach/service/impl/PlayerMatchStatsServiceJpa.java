@@ -14,10 +14,6 @@ public class PlayerMatchStatsServiceJpa implements PlayerMatchStatsService {
 
     private final PlayerMatchStatsRepository playerMatchStatsRepository;
 
-    public List<PlayerMatchStats> getPlayerMatchStatssByTeamId(Long teamId) {
-        return playerMatchStatsRepository.findByTeamId_IdTeam(teamId);
-    }
-
     public List<PlayerMatchStats> getPlayerMatchStatssByPlayerId(Long playerId) {
         return playerMatchStatsRepository.findByPlayerId_IdPlayer(playerId);
     }

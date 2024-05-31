@@ -1,5 +1,6 @@
 package hr.fer.fbcoach.model.dto;
 
+import hr.fer.fbcoach.model.util.LocationType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ public class MatchDTO {
     private Long idMatch;
     private Date date;
     private String opponent;
-    private String location;
+    private LocationType location;
     private String result;
     private Long teamId;
     private List<Long> playerMatchStatsIds;
