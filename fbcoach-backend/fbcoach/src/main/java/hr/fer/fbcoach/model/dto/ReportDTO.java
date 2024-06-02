@@ -16,5 +16,5 @@ public class ReportDTO {
     private Long idReport;
     private Date date;
     private String description;
-    //private Long authorId; // or you can use an AuthorDTO if you want more details about the author
+    //private Long authorId;
 }

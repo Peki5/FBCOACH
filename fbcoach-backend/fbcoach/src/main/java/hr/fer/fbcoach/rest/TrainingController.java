@@ -1,8 +1,6 @@
 package hr.fer.fbcoach.rest;
 
-import hr.fer.fbcoach.model.Team;
 import hr.fer.fbcoach.model.Training;
-import hr.fer.fbcoach.model.dto.TeamDTO;
 import hr.fer.fbcoach.model.dto.TrainingDTO;
 import hr.fer.fbcoach.service.TrainingService;
 import lombok.RequiredArgsConstructor;
@@ -70,7 +68,6 @@ public class TrainingController {
         trainingDTO.setDescription(training.getDescription());
         trainingDTO.setType(training.getType());
 
-        // Manually set teamId and teamName
         if (training.getTeamId() != null) {
             trainingDTO.setTeamId(training.getTeamId().getIdTeam());
         }
@@ -78,11 +75,7 @@ public class TrainingController {
         return trainingDTO;
     }
 
-
-
     private Training convertToEntity(TrainingDTO trainingDTO) {
-        // If you need to set the Team object, you can do it here
-        // training.setTeamId(teamService.findTeamById(trainingDTO.getTeamId()));
         return modelMapper.map(trainingDTO, Training.class);
     }
 }

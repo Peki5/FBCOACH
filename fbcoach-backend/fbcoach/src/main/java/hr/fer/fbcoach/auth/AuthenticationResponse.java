@@ -1,6 +1,5 @@
 package hr.fer.fbcoach.auth;
 
-import hr.fer.fbcoach.model.Korisnik;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

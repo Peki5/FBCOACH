@@ -113,7 +113,7 @@
           const response = await RequestHandler.getRequest(
             SPRING_URL.concat(`/training?teamId=${this.$route.params.teamId}`)
           );
-          console.log("Fetched trainings:", response);  // Log the response
+          console.log("Fetched trainings:", response); 
   
           if (Array.isArray(response)) {
             this.treninzi = response;

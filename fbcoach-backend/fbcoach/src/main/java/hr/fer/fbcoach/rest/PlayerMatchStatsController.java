@@ -1,9 +1,7 @@
 package hr.fer.fbcoach.rest;
 
 import hr.fer.fbcoach.model.PlayerMatchStats;
-import hr.fer.fbcoach.model.TacticsApplication;
 import hr.fer.fbcoach.model.dto.PlayerMatchStatsDTO;
-import hr.fer.fbcoach.model.dto.TacticsApplicationDTO;
 import hr.fer.fbcoach.service.PlayerMatchStatsService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

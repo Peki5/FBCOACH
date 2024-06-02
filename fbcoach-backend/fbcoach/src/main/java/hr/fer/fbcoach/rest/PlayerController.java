@@ -101,7 +101,6 @@ public class PlayerController {
                         .map(Team::getIdTeam)
                         .collect(Collectors.toList()) : new ArrayList<>());
 
-        // Manually set teamRosterIds, healthStatusIds, and attendanceIds
         playerDTO.setPlayerMatchStatsIds(player.getPlayerMatchStats() != null ?
                 player.getPlayerMatchStats().stream()
                         .map(PlayerMatchStats::getIdPlayerMatchStats)
