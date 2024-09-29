@@ -1,1 +1,1 @@
-export const SPRING_URL = process.env.VUE_APP_SPRING_URL || 'http://localhost:7070';
+export const SPRING_URL = 'https://fbcoach.onrender.com';
