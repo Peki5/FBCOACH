@@ -17,7 +17,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the JAR file from the build stage into the container
-COPY --from=build /app/target/FBCOACH-0.0.1-SNAPSHOT.jar /app/
+COPY --from=build /app/target/fbcoach-0.0.1-SNAPSHOT.jar /app/
 
 # Specify the command to run on container start
-CMD ["java", "-jar", "FBCOACH-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "fbcoach-0.0.1-SNAPSHOT.jar"]
