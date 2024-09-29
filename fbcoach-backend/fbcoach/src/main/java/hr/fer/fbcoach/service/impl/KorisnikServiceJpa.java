@@ -15,7 +15,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class KorisnikServiceJpa implements KorisnikService {
 
-    private KorisnikRepository korisnikRepository;
+    private final KorisnikRepository korisnikRepository;
 
 
     @Override
