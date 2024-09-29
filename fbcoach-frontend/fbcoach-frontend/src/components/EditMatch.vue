@@ -42,8 +42,8 @@
   </template>
   
   <script>
-  import RequestHandler from "./../RequestHandler.js";
-  import { SPRING_URL } from "./../constants.js";
+  import RequestHandler from "../RequestHandler.js";
+  import { SPRING_URL } from "../constants.js";
   
   export default {
     data() {
