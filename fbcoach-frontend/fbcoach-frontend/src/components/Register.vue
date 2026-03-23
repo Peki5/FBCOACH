@@ -50,7 +50,7 @@ export default {
                 .then(() => {
                     this.$router.push("Login")
                 })
-                .catch(e => {
+                .catch(() => {
                     this.message = "Provjerite unesene podatke!"
                 })
         }

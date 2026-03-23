@@ -44,7 +44,7 @@ export default {
                 sessionStorage.setItem("user", JSON.stringify(response.data));
                 this.$router.push("/")
             })
-            .catch(e => {
+            .catch(() => {
                 this.message = "Krivi email ili lozinka!"
             })
         }

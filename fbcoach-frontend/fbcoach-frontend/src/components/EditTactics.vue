@@ -24,7 +24,7 @@
 
   <script>
   import RequestHandler from "../RequestHandler.js";
-  import { SPRING_URL } from "../constants.js";
+  import {SPRING_URL} from "../constants.js";
 
   export default {
     data() {
@@ -40,10 +40,9 @@
     async mounted() {
       const idTactics = this.$route.params.id;
       try {
-        const response = await RequestHandler.getRequest(
-          SPRING_URL.concat(`/tactics/`).concat(idTactics)
+        this.tactic = await RequestHandler.getRequest(
+            SPRING_URL.concat(`/tactics/`).concat(idTactics)
         );
-        this.tactic = response;
       } catch {
       }
     },
