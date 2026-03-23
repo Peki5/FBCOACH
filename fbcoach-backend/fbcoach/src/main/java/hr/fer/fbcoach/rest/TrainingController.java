@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/training")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
 public class TrainingController {
 
     private final TrainingService trainingService;

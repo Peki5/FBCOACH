@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/team")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
 public class TeamController {
 
     private final TeamService teamService;

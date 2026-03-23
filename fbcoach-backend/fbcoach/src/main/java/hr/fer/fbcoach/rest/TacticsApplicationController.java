@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/tacticsapplication")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
 public class TacticsApplicationController {
 
     private final TacticsApplicationService tacticsApplicationService;
