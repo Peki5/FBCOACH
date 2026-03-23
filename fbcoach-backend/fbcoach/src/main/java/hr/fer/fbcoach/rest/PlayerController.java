@@ -25,10 +25,18 @@ public class PlayerController {
     private final ModelMapper modelMapper;
 
     @GetMapping("/all")
-    public List<PlayerDTO> getAllPlayers() {
+    public List<PlayerDTO> getAllPlayers(@RequestParam(required = false) Long teamId) {
         List<Player> players = playerService.getAllPlayers();
         return players.stream()
-                .filter(player -> player.getTeams() == null || player.getTeams().isEmpty()) // Exclude players in any team
+                .filter(player -> {
+                    if (teamId != null) {
+                        // Exclude players already in the specified team
+                        return player.getTeams() == null ||
+                                player.getTeams().stream().noneMatch(t -> t.getIdTeam().equals(teamId));
+                    }
+                    // If no teamId, return players not in any team
+                    return player.getTeams() == null || player.getTeams().isEmpty();
+                })
                 .sorted(Comparator.comparing(Player::getIdPlayer))
                 .map(this::convertToDto)
                 .collect(Collectors.toList());

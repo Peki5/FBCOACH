@@ -117,7 +117,7 @@
   
           if (Array.isArray(response)) {
             this.treninzi = response;
-            this.treninzi.sort((a, b) => (a.idTraining > b.idTraining ? 1 : -1));
+            this.treninzi.sort((a, b) => new Date(a.date) - new Date(b.date));
           } else {
             console.warn("Unexpected data format:", response);
           }

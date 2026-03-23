@@ -176,7 +176,7 @@ export default {
             if (this.isDodajVisible) {
                 try {
                     const response = await RequestHandler.getRequest(
-                        SPRING_URL.concat("/players/all")
+                        SPRING_URL.concat("/players/all?teamId=").concat(this.teamId)
                     );
                     console.log("Fetched all players:", response);  // Log the response
 

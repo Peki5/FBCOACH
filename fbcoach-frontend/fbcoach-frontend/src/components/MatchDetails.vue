@@ -180,6 +180,14 @@
         console.error("Error fetching match details:", error);
       }
     },
+    computed: {
+      goalscorers() {
+        return this.playerMatchStats.filter(stat => stat.goals > 0);
+      },
+      assistants() {
+        return this.playerMatchStats.filter(stat => stat.assists > 0);
+      },
+    },
     methods: {
       async dodajTaktiku() {
         try {
@@ -189,6 +197,11 @@
           );
           console.log("Added new tactics application:", response);  // Log the response
           this.tacticsApplications.push(response);  // Add the new tactics application to the list
+          this.novaTaktika = {
+            description: "",
+            tacticsId: null,
+            matchId: this.$route.params.id,
+          };
           this.toggleTaktika();  // Hide the add tactics form
         } catch (error) {
           console.error("Error adding new tactics application:", error);
