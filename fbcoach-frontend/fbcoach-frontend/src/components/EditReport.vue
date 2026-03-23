@@ -19,7 +19,7 @@
 
   <script>
   import RequestHandler from "./../RequestHandler.js";
-  import { SPRING_URL } from "../constants";
+  import {SPRING_URL} from "../constants";
 
   export default {
     data() {
@@ -34,8 +34,7 @@
     async mounted() {
       const reportId = this.$route.params.id;
       try {
-        const response = await RequestHandler.getRequest(SPRING_URL.concat(`/report/${reportId}`));
-        this.editedReport = response;
+        this.editedReport = await RequestHandler.getRequest(SPRING_URL.concat(`/report/${reportId}`));
         this.editedReport.date = new Date(this.editedReport.date).toISOString().split('T')[0];
       } catch {
       }

@@ -109,7 +109,7 @@
 
   <script>
   import RequestHandler from "./../RequestHandler.js";
-  import { SPRING_URL } from "./../constants.js";
+  import {SPRING_URL} from "../constants";
 
   export default {
     data() {
@@ -150,25 +150,21 @@
         matchResponse.date = new Date(matchResponse.date).toISOString().split('T')[0];
         this.match = matchResponse;
 
-        const tacticsResponse = await RequestHandler.getRequest(
-          SPRING_URL.concat(`/tactics?teamId=`).concat(this.match.teamId)
+        this.tactics = await RequestHandler.getRequest(
+            SPRING_URL.concat(`/tactics?teamId=`).concat(this.match.teamId)
         );
-        this.tactics = tacticsResponse;
 
-        const playersResponse = await RequestHandler.getRequest(
-          SPRING_URL.concat(`/players?teamId=`).concat(this.match.teamId)
+        this.players = await RequestHandler.getRequest(
+            SPRING_URL.concat(`/players?teamId=`).concat(this.match.teamId)
         );
-        this.players = playersResponse;
 
-        const tacticsApplicationsResponse = await RequestHandler.getRequest(
-          SPRING_URL.concat(`/tacticsapplication/match/`).concat(idMatch)
+        this.tacticsApplications = await RequestHandler.getRequest(
+            SPRING_URL.concat(`/tacticsapplication/match/`).concat(idMatch)
         );
-        this.tacticsApplications = tacticsApplicationsResponse;
 
-        const playerMatchStatsResponse = await RequestHandler.getRequest(
-          SPRING_URL.concat(`/playermatchstats/match/`).concat(idMatch)
+        this.playerMatchStats = await RequestHandler.getRequest(
+            SPRING_URL.concat(`/playermatchstats/match/`).concat(idMatch)
         );
-        this.playerMatchStats = playerMatchStatsResponse;
       } catch {
       }
     },

@@ -31,7 +31,7 @@
 
 <script>
 import axios from 'axios'
-import { SPRING_URL } from './../constants.js'
+import { SPRING_URL } from '../constants'
 
 export default {
     data() {
@@ -47,7 +47,7 @@ export default {
     methods: {
         async submit() {
             await axios.post(SPRING_URL.concat('/auth/register'), this.user)
-                .then(response => {
+                .then(() => {
                     this.$router.push("Login")
                 })
                 .catch(e => {

@@ -65,7 +65,7 @@
 
   <script>
   import RequestHandler from "./../RequestHandler.js";
-  import { SPRING_URL } from "./../constants.js";
+  import { SPRING_URL } from "../constants";
 
   export default {
     data() {

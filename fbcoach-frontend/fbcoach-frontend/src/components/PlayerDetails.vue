@@ -28,7 +28,7 @@
 
 <script>
 import RequestHandler from "./../RequestHandler.js";
-import { SPRING_URL } from "./../constants.js";
+import {SPRING_URL} from "../constants";
 
 export default {
     data() {
@@ -39,8 +39,7 @@ export default {
     async mounted() {
         const playerId = this.$route.params.id;
         try {
-            const response = await RequestHandler.getRequest(SPRING_URL.concat("/players/").concat(playerId));
-            this.player = response;
+          this.player = await RequestHandler.getRequest(SPRING_URL.concat("/players/").concat(playerId));
         } catch {
         }
     },

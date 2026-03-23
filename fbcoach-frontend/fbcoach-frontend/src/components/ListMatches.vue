@@ -73,7 +73,7 @@
 
   <script>
   import RequestHandler from "./../RequestHandler.js";
-  import { SPRING_URL } from "./../constants.js";
+  import {SPRING_URL} from "../constants";
 
   export default {
     data() {
@@ -92,10 +92,9 @@
     async mounted() {
       const teamId = this.$route.params.teamId;
       try {
-        const response = await RequestHandler.getRequest(
-          SPRING_URL.concat(`/matches?teamId=`).concat(teamId)
+        this.matches = await RequestHandler.getRequest(
+            SPRING_URL.concat(`/matches?teamId=`).concat(teamId)
         );
-        this.matches = response;
       } catch {
       }
     },
