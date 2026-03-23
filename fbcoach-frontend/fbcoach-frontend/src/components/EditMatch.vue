@@ -1,50 +1,42 @@
 <template>
-    <div class="container antialiased text-black">
-      <div class="flex items-center w-full">
-        <div class="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
-          <button @click="goBack"
-            class="bg-gray-500 hover:bg-gray-400 text-white text-sm font-semibold px-4 py-2 rounded">
-            Povratak
+    <div class="min-h-[80vh] flex items-center justify-center px-4">
+      <div class="w-full max-w-md card">
+        <button @click="goBack" class="btn-secondary mb-4">
+          Povratak
+        </button>
+        <span class="form-title">Uredi Utakmicu</span>
+        <form @submit.prevent="updateMatch" class="space-y-5">
+          <div>
+            <label class="label">Datum</label>
+            <input v-model="match.date" type="date" required class="input-field" />
+          </div>
+          <div>
+            <label class="label">Protivnik</label>
+            <input v-model="match.opponent" type="text" required class="input-field" />
+          </div>
+          <div>
+            <label class="label">Lokacija</label>
+            <select v-model="match.location" required class="input-field">
+              <option value="HOME">Doma</option>
+              <option value="AWAY">Gost</option>
+            </select>
+          </div>
+          <div>
+            <label class="label">Rezultat</label>
+            <input v-model="match.result" type="text" required class="input-field" />
+          </div>
+          <button class="btn-primary w-full py-3">
+            Ažuriraj
           </button>
-          <span class="block w-full text-xl font-bold mt-4 mb-4">Uredi Utakmicu</span>
-          <form @submit.prevent="updateMatch" class="mb-4">
-            <div class="mb-4 md:w-full">
-              <label class="block text-xs mb-1">Datum</label>
-              <input v-model="match.date" type="date" required
-                class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-            </div>
-            <div class="mb-4 md:w-full">
-              <label class="block text-xs mb-1">Protivnik</label>
-              <input v-model="match.opponent" type="text" required
-                class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-            </div>
-            <div class="mb-4 md:w-full">
-              <label class="block text-xs mb-1">Lokacija</label>
-              <select v-model="match.location" required
-                class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300">
-                <option value="HOME">Doma</option>
-                <option value="AWAY">Gost</option>
-              </select>
-            </div>
-            <div class="mb-4 md:w-full">
-              <label class="block text-xs mb-1">Rezultat</label>
-              <input v-model="match.result" type="text" required
-                class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-            </div>
-            <button
-              class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-              Ažuriraj
-            </button>
-          </form>
-        </div>
+        </form>
       </div>
     </div>
   </template>
-  
+
   <script>
   import RequestHandler from "../RequestHandler.js";
   import { SPRING_URL } from "../constants.js";
-  
+
   export default {
     data() {
       return {
@@ -65,7 +57,7 @@
           SPRING_URL.concat(`/matches/`).concat(idMatch)
         );
         response.date = new Date(response.date).toISOString().split('T')[0];
-        console.log("Fetched match for edit:", response);  // Log the response
+        console.log("Fetched match for edit:", response);
         this.match = response;
       } catch (error) {
         console.error("Error fetching match for edit:", error);
@@ -78,7 +70,7 @@
             SPRING_URL.concat(`/matches/edit/${this.match.idMatch}`),
             this.match
           );
-          this.$router.push({ name: 'ListMatches', params: { teamId: this.match.teamId } }); // Redirect to the list of matches
+          this.$router.push({ name: 'ListMatches', params: { teamId: this.match.teamId } });
         } catch (error) {
           console.error("Error updating match:", error);
         }
@@ -89,4 +81,3 @@
     },
   };
   </script>
-  

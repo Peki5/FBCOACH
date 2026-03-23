@@ -1,98 +1,80 @@
 <template>
     <main v-if="$store.state.user">
       <div v-if="isDodajVisible">
-        <!-- Add Training Section -->
-        <div class="antialiased text-black">
-          <div class="flex items-center w-full">
-            <div class="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
-              <button @click="toggleDodaj"
-                class="bg-gray-500 hover:bg-gray-400 text-white text-sm font-semibold px-4 py-2 rounded">
-                Povratak
+        <div class="min-h-[80vh] flex items-center justify-center px-4">
+          <div class="w-full max-w-md card">
+            <button @click="toggleDodaj" class="btn-secondary mb-4">
+              Povratak
+            </button>
+            <span class="form-title">Dodaj novi trening</span>
+            <form @submit.prevent="dodajNoviTrening" class="space-y-5">
+              <div>
+                <label class="label">Datum</label>
+                <input v-model="noviTrening.date" type="date" required class="input-field" />
+              </div>
+              <div>
+                <label class="label">Opis</label>
+                <textarea v-model="noviTrening.description" required class="input-field min-h-[80px]"></textarea>
+              </div>
+              <div>
+                <label class="label">Tip</label>
+                <select v-model="noviTrening.type" required class="input-field">
+                  <option v-for="type in trainingTypes" :key="type" :value="type">{{ type }}</option>
+                </select>
+              </div>
+              <button class="btn-primary w-full py-3">
+                Dodaj
               </button>
-              <span class="block w-full text-xl font-bold mt-4 mb-4">Dodaj novi trening</span>
-              <form @submit.prevent="dodajNoviTrening" class="mb-4">
-                <div class="mb-4 md:w-full">
-                  <label class="block text-xs mb-1">Datum</label>
-                  <input v-model="noviTrening.date" type="date" required
-                    class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-                </div>
-                <div class="mb-4 md:w-full">
-                  <label class="block text-xs mb-1">Opis</label>
-                  <textarea v-model="noviTrening.description" required
-                    class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300"></textarea>
-                </div>
-                <div class="mb-4 md:w-full">
-                  <label class="block text-xs mb-1">Tip</label>
-                  <select v-model="noviTrening.type" required
-                    class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300">
-                    <option v-for="type in trainingTypes" :key="type" :value="type">{{ type }}</option>
-                  </select>
-                </div>
-                <button
-                  class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-                  Dodaj
-                </button>
-              </form>
-            </div>
+            </form>
           </div>
         </div>
       </div>
-  
-      <!-- List of Trainings Section -->
-      <div v-else class="container mt-4 text-black bg-white rounded">
-        <div class="pt-4 mb-8 relative">
-          <div class="">
-            <h1 class="text-2xl py-2 px-1">Treninzi</h1>
-            <button @click="toggleDodaj"
-              class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-              Dodaj trening
+
+      <div v-else class="container mt-6">
+        <div class="card">
+          <div class="flex items-center justify-between mb-6">
+            <h1 class="page-title">Treninzi</h1>
+            <button @click="toggleDodaj" class="btn-primary">
+              + Dodaj trening
             </button>
           </div>
-  
+
           <div v-if="treninzi.length > 0">
-            <div class="mt-5 pb-4 grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               <div v-for="trening in treninzi" :key="trening.idTraining">
-                <div class="w-full h-full rounded overflow-hidden shadow-lg hover:cursor-pointer border bg-slate-200 p-2">
-                  <div class="px-6 py-4">
-                    <div class="font-bold text-xl mb-2">Datum: {{ formatDate(trening.date) }}</div>
-                    <p class="text-gray-700 text-base">
-                      Opis: {{ trening.description }}
-                    </p>
-                    <p class="text-gray-700 text-base">
-                      Tip: {{ trening.type }}
-                    </p>
-                    <button @click="obrisiTrening(trening.idTraining)"
-                      class="bg-red-500 hover:bg-red-400 text-white text-sm font-semibold px-4 py-2 rounded">
-                      Delete
-                    </button>
-                    <button @click="navigateToEditPage(trening.idTraining)" class="bg-yellow-500 hover:bg-yellow-400 text-white text-sm font-semibold px-4 py-2 rounded">Edit</button>
+                <div class="card-item">
+                  <div class="font-semibold text-fbcoach-text mb-1">{{ formatDate(trening.date) }}</div>
+                  <p class="text-fbcoach-text-muted text-sm mb-1">Opis: {{ trening.description }}</p>
+                  <p class="text-fbcoach-text-muted text-sm">Tip: {{ trening.type }}</p>
+                  <div class="flex gap-2 mt-4">
+                    <button @click="navigateToEditPage(trening.idTraining)" class="btn-warning text-xs">Edit</button>
+                    <button @click="obrisiTrening(trening.idTraining)" class="btn-danger text-xs">Delete</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div v-else class="mt-5">
-            <p>Nema treninga za prikaz</p>
+          <div v-else class="mt-5 text-center py-8">
+            <p class="text-fbcoach-text-muted">Nema treninga za prikaz</p>
           </div>
         </div>
       </div>
-  
+
     </main>
-  
-    <!-- Not Logged In Section -->
-    <main v-else class="container text-white">
-      <div class="pt-8 mb-8 relative">
-        <h1 class="text-2xl text-center py-2 px-1">
+
+    <main v-else class="container">
+      <div class="pt-16 mb-8 text-center">
+        <h1 class="text-2xl font-medium text-fbcoach-text-muted">
           Molimo prijavite se u sustav!
         </h1>
       </div>
     </main>
   </template>
-  
+
   <script>
   import RequestHandler from "./../RequestHandler.js";
   import { SPRING_URL } from "./../constants.js";
-  
+
   export default {
     data() {
       return {
@@ -104,7 +86,7 @@
           type: "",
           teamId: this.$route.params.teamId
         },
-        trainingTypes: ["STRENGTH", "EXPLOSIVE", "RUNNING", "TACTICAL"], // Training types
+        trainingTypes: ["STRENGTH", "EXPLOSIVE", "RUNNING", "TACTICAL"],
       };
     },
     async mounted() {
@@ -113,8 +95,8 @@
           const response = await RequestHandler.getRequest(
             SPRING_URL.concat(`/training?teamId=${this.$route.params.teamId}`)
           );
-          console.log("Fetched trainings:", response); 
-  
+          console.log("Fetched trainings:", response);
+
           if (Array.isArray(response)) {
             this.treninzi = response;
             this.treninzi.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -143,11 +125,11 @@
       },
       async obrisiTrening(id) {
         const confirmed = confirm("Jeste li sigurni?");
-        
+
         if (confirmed) {
           try {
             const response = await RequestHandler.deleteRequest(SPRING_URL.concat(`/training/delete/${id}`));
-            console.log("Training deleted successfully:", id);  
+            console.log("Training deleted successfully:", id);
             this.treninzi = this.treninzi.filter(training => training.idTraining !== id);
           } catch (error) {
             console.error("Error deleting training:", error);
@@ -160,4 +142,3 @@
     },
   };
   </script>
-  

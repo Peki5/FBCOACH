@@ -1,59 +1,50 @@
 <template>
-    <div class="container antialiased text-black">
+    <div class="container mt-6">
         <div v-if="isDodajVisible">
-            <!-- Add Health Status Section -->
-            <div class="antialiased text-black">
-                <div class="flex items-center w-full">
-                    <div class="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
-                        <button @click="toggleDodaj"
-                            class="bg-gray-500 hover:bg-gray-400 text-white text-sm font-semibold px-4 py-2 rounded">
-                            Povratak
+            <div class="flex items-center justify-center px-4">
+                <div class="w-full max-w-md card">
+                    <button @click="toggleDodaj" class="btn-secondary mb-4">
+                        Povratak
+                    </button>
+                    <span class="form-title">Dodaj novi zdravstveni status</span>
+                    <form @submit.prevent="dodajNoviStatus" class="space-y-5">
+                        <div>
+                            <label class="label">Datum</label>
+                            <input v-model="noviStatus.date" type="date" required class="input-field" />
+                        </div>
+                        <div>
+                            <label class="label">Status</label>
+                            <input v-model="noviStatus.statusNotes" type="text" required class="input-field" />
+                        </div>
+                        <button class="btn-primary w-full py-3">
+                            Dodaj
                         </button>
-                        <span class="block w-full text-xl font-bold mt-4 mb-4">Dodaj novi zdravstveni status</span>
-                        <form @submit.prevent="dodajNoviStatus" class="mb-4">
-                            <div class="mb-4 md:w-full">
-                                <label class="block text-xs mb-1">Datum</label>
-                                <input v-model="noviStatus.date" type="date" required
-                                    class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-                            </div>
-                            <div class="mb-4 md:w-full">
-                                <label class="block text-xs mb-1">Status</label>
-                                <input v-model="noviStatus.statusNotes" type="text" required
-                                    class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-                            </div>
-                            <button
-                                class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-                                Dodaj
-                            </button>
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <div v-else class="flex items-center w-full">
-            <div class="w-full bg-white rounded shadow-lg p-8 m-4">
-                <button @click="toggleDodaj"
-                    class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-                    Dodaj novi zdravstveni status
-                </button>
-                <span class="block w-full text-xl font-bold mt-4 mb-4">Zdravstveni Statusi</span>
+        <div v-else>
+            <div class="card">
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="page-title">Zdravstveni Statusi</h1>
+                    <button @click="toggleDodaj" class="btn-primary">
+                        + Dodaj status
+                    </button>
+                </div>
                 <div v-if="statuses.length > 0">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div v-for="status in statuses" :key="status.idHealthStatus"
-                            class="p-4 border rounded bg-slate-200">
-                            <p class="text-gray-700">Datum: {{ formatDate(status.date) }}</p>
-                            <p class="text-gray-700">StatusNotes: {{ status.statusNotes }}</p>
-                            <div class="flex space-x-2 mt-4">
-                                <button @click="navigateToEdit(status.idHealthStatus)"
-                                    class="bg-yellow-500 hover:bg-yellow-400 text-white text-sm font-semibold px-4 py-2 rounded">Uredi</button>
-                                <button @click="deleteStatus(status.idHealthStatus)"
-                                    class="bg-red-500 hover:bg-red-400 text-white text-sm font-semibold px-4 py-2 rounded">Obriši</button>
+                        <div v-for="status in statuses" :key="status.idHealthStatus" class="card-item">
+                            <p class="text-fbcoach-text-muted text-sm mb-1">{{ formatDate(status.date) }}</p>
+                            <p class="text-fbcoach-text">{{ status.statusNotes }}</p>
+                            <div class="flex gap-2 mt-3">
+                                <button @click="navigateToEdit(status.idHealthStatus)" class="btn-warning text-xs">Uredi</button>
+                                <button @click="deleteStatus(status.idHealthStatus)" class="btn-danger text-xs">Obriši</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div v-else class="mt-5">
-                    <p>Nema zdravstvenih statusa za prikaz.</p>
+                <div v-else class="mt-5 text-center py-8">
+                    <p class="text-fbcoach-text-muted">Nema zdravstvenih statusa za prikaz.</p>
                 </div>
             </div>
         </div>
@@ -82,7 +73,7 @@ export default {
             const response = await RequestHandler.getRequest(
                 SPRING_URL.concat(`/healthstatuses/player/`).concat(playerId)
             );
-            console.log("Fetched health statuses:", response);  // Log the response
+            console.log("Fetched health statuses:", response);
             this.statuses = response.map(item => ({
                 idHealthStatus: item.idHealthStatus,
                 date: item.date,
@@ -113,20 +104,17 @@ export default {
         },
         async dodajNoviStatus() {
             try {
-                // Postavljanje playerId unutar objekta noviStatus
                 this.noviStatus.playerId = this.$route.params.playerId;
 
-                // Slanje zahtjeva za dodavanje novog zdravstvenog statusa
                 const response = await RequestHandler.postRequest(
                     SPRING_URL.concat("/healthstatuses/add"),
                     this.noviStatus
                 );
 
-                // Provjera uspješnosti zahtjeva
                 if (response) {
-                    console.log("Added new health status:", response);  // Logiranje odgovora
-                    this.statuses.push(response);  // Dodavanje novog statusa u listu
-                    this.toggleDodaj();  // Sakrivanje forme za dodavanje novog statusa
+                    console.log("Added new health status:", response);
+                    this.statuses.push(response);
+                    this.toggleDodaj();
                 }
             } catch (error) {
                 console.error("Error adding new health status:", error);
@@ -141,11 +129,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
-}
-</style>

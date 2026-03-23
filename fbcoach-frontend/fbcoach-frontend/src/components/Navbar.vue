@@ -1,29 +1,34 @@
 <template>
-  <header class="top-0 bg-fbcoach-primary shadow-lg">
-    <nav class="container flex flex-col sm:flex-row items-center gap-4 text-white py-6">
+  <header class="sticky top-0 z-50 bg-fbcoach-surface/95 backdrop-blur-sm border-b border-fbcoach-border/50 shadow-lg">
+    <nav class="container flex flex-col sm:flex-row items-center gap-4 text-fbcoach-text py-4">
       <RouterLink :to="{ name: 'home' }">
         <div class="flex items-center gap-3">
-          <p class="text-2xl">FBCOACH</p>
+          <div class="w-8 h-8 bg-fbcoach-primary rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-sm">FB</span>
+          </div>
+          <p class="text-xl font-semibold tracking-wide">FBCOACH</p>
         </div>
       </RouterLink>
 
-      <div v-if="$store.state.user" class="flex gap-10 flex-1 justify-end">
+      <div v-if="$store.state.user" class="flex gap-8 flex-1 justify-end items-center">
         <RouterLink :to="{ name: 'home' }">
-          <p class="text-xl hover:text-gray-300">Timovi</p>
+          <p class="text-fbcoach-text-muted hover:text-fbcoach-primary font-medium transition-colors">Timovi</p>
         </RouterLink>
         <RouterLink :to="{ name: 'Reports' }">
-          <p class="text-xl hover:text-gray-300">Izvještaji</p>
+          <p class="text-fbcoach-text-muted hover:text-fbcoach-primary font-medium transition-colors">Izvještaji</p>
         </RouterLink>
-        <p class="text-xl">{{ $store.state.user.ime }} {{ $store.state.user.prezime }}</p>
-        <button class="text-xl hover:text-gray-300" @click="logout">Odjavi se</button>
+        <div class="flex items-center gap-4 pl-4 border-l border-fbcoach-border">
+          <p class="text-sm text-fbcoach-text-muted">{{ $store.state.user.ime }} {{ $store.state.user.prezime }}</p>
+          <button class="text-sm text-fbcoach-text-muted hover:text-fbcoach-danger font-medium transition-colors" @click="logout">Odjavi se</button>
+        </div>
       </div>
 
-      <div v-else class="flex gap-10 flex-1 justify-end">
+      <div v-else class="flex gap-6 flex-1 justify-end items-center">
         <RouterLink :to="{ name: 'Login' }">
-          <p class="text-xl hover:text-gray-300">Prijava</p>
+          <p class="text-fbcoach-text-muted hover:text-fbcoach-primary font-medium transition-colors">Prijava</p>
         </RouterLink>
         <RouterLink :to="{ name: 'Register' }">
-          <p class="text-xl hover:text-gray-300">Registracija</p>
+          <button class="btn-primary">Registracija</button>
         </RouterLink>
       </div>
     </nav>

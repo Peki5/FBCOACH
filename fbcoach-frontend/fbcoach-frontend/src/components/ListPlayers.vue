@@ -1,127 +1,109 @@
 <template>
     <main v-if="$store.state.user">
         <div v-if="isDodajVisible">
-            <!-- Add Existing Player Section -->
-            <div class="antialiased text-black">
-                <div class="flex items-center w-full">
-                    <div class="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
-                        <button @click="toggleDodaj" class="bg-gray-500 hover:bg-gray-400 text-white text-sm font-semibold px-4 py-2 rounded">
-                            Povratak
-                        </button>
-                        <span class="block w-full text-xl font-bold mt-4 mb-4">Dodaj postojećeg igrača</span>
-                        <div v-if="allPlayers.length > 0">
-                            <div class="mt-5 pb-4">
-                                <div v-for="player in allPlayers" :key="player.idPlayer" class="mb-4 p-4 border rounded bg-slate-200">
-                                    <div class="flex justify-between">
-                                        <div>
-                                            <div class="font-bold text-xl">{{ player.firstname }} {{ player.lastName }}</div>
-                                            <p class="text-gray-700">Pozicija: {{ player.position }}</p>
-                                        </div>
-                                        <div class="flex items-center space-x-2">
-                                            <button @click="addExistingPlayer(player.idPlayer)" class="bg-green-500 hover:bg-green-400 text-white text-sm font-semibold px-4 py-2 rounded">Dodaj</button>
-                                        </div>
+            <div class="min-h-[80vh] flex items-center justify-center px-4">
+                <div class="w-full max-w-md card">
+                    <button @click="toggleDodaj" class="btn-secondary mb-4">
+                        Povratak
+                    </button>
+                    <span class="form-title">Dodaj postojećeg igrača</span>
+                    <div v-if="allPlayers.length > 0">
+                        <div class="space-y-3">
+                            <div v-for="player in allPlayers" :key="player.idPlayer" class="card-item">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <div class="font-semibold text-fbcoach-text">{{ player.firstname }} {{ player.lastName }}</div>
+                                        <p class="text-fbcoach-text-muted text-sm">Pozicija: {{ player.position }}</p>
                                     </div>
+                                    <button @click="addExistingPlayer(player.idPlayer)" class="btn-primary text-xs">Dodaj</button>
                                 </div>
                             </div>
                         </div>
-                        <div v-else class="mt-5">
-                            <p>Nema igrača za prikaz</p>
-                        </div>
+                    </div>
+                    <div v-else class="mt-5 text-center py-4">
+                        <p class="text-fbcoach-text-muted">Nema igrača za prikaz</p>
                     </div>
                 </div>
             </div>
         </div>
         <div v-else-if="isAddPlayerVisible">
-            <!-- Add New Player Section -->
-            <div class="antialiased text-black">
-                <div class="flex items-center w-full">
-                    <div class="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
-                        <button @click="toggleAddPlayer" class="bg-gray-500 hover:bg-gray-400 text-white text-sm font-semibold px-4 py-2 rounded">
-                            Povratak
+            <div class="min-h-[80vh] flex items-center justify-center px-4">
+                <div class="w-full max-w-md card">
+                    <button @click="toggleAddPlayer" class="btn-secondary mb-4">
+                        Povratak
+                    </button>
+                    <span class="form-title">Kreiraj novog igrača</span>
+                    <form @submit.prevent="dodajNovogIgraca" class="space-y-5">
+                        <div>
+                            <label class="label">Ime</label>
+                            <input v-model="noviIgrac.firstname" type="text" required class="input-field" />
+                        </div>
+                        <div>
+                            <label class="label">Prezime</label>
+                            <input v-model="noviIgrac.lastName" type="text" required class="input-field" />
+                        </div>
+                        <div>
+                            <label class="label">Datum rođenja</label>
+                            <input v-model="noviIgrac.dateOfBirth" type="date" required class="input-field" />
+                        </div>
+                        <div>
+                            <label class="label">Pozicija</label>
+                            <select v-model="noviIgrac.position" required class="input-field">
+                                <option v-for="pos in position" :key="pos" :value="pos">{{ pos }}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="label">Visina (cm)</label>
+                            <input v-model="noviIgrac.height" type="number" required class="input-field" />
+                        </div>
+                        <div>
+                            <label class="label">Težina (kg)</label>
+                            <input v-model="noviIgrac.weight" type="number" required class="input-field" />
+                        </div>
+                        <button class="btn-primary w-full py-3">
+                            Dodaj
                         </button>
-                        <span class="block w-full text-xl font-bold mt-4 mb-4">Kreiraj novog igrača</span>
-                        <form @submit.prevent="dodajNovogIgraca" class="mb-4">
-                            <div class="mb-4 md:w-full">
-                                <label class="block text-s mb-1">Ime</label>
-                                <input v-model="noviIgrac.firstname" type="text" required class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-                            </div>
-                            <div class="mb-4 md:w-full">
-                                <label class="block text-s mb-1">Prezime</label>
-                                <input v-model="noviIgrac.lastName" type="text" required class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-                            </div>
-                            <div class="mb-4 md:w-full">
-                                <label class="block text-s mb-1">Datum rođenja</label>
-                                <input v-model="noviIgrac.dateOfBirth" type="date" required class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-                            </div>
-                            <div class="mb-4 md:w-full">
-                                <label class="block text-xs mb-1">Pozicija</label>
-                                <select v-model="noviIgrac.position" required class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300">
-                                    <option v-for="pos in position" :key="pos" :value="pos">{{ pos }}</option>
-                                </select>
-                            </div>
-                            <div class="mb-4 md:w-full">
-                                <label class="block text-s mb-1">Visina (cm)</label>
-                                <input v-model="noviIgrac.height" type="number" required class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-                            </div>
-                            <div class="mb-4 md:w-full">
-                                <label class="block text-s mb-1">Težina (kg)</label>
-                                <input v-model="noviIgrac.weight" type="number" required class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-                            </div>
-                            <button class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-                                Dodaj
-                            </button>
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <!-- List of Players Section -->
-        <div v-else class="container mt-4 text-black bg-white rounded">
-            <div class="pt-4 pb-2 mb-8 relative">
-                <div class="">
-                    <h1 class="text-2xl py-2 px-1">Igrači</h1>
-                    <button @click="toggleDodaj" class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-                        Dodaj postojećeg igrača
-                    </button>
-                    <button @click="toggleAddPlayer" class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded ml-2">
-                        Kreiraj novog igrača
-                    </button>
-                    <button @click="navigateToMatches" class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded ml-2">
-                        Utakmice
-                    </button>
-                    <button @click="navigateToTrainings" class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded ml-2">
-                        Treninzi
-                    </button>
-                    <button @click="navigateToTactics" class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded ml-2">
-                        Taktike
-                    </button>
+        <div v-else class="container mt-6">
+            <div class="card">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <h1 class="page-title">Igrači</h1>
+                    <div class="flex flex-wrap gap-2">
+                        <button @click="toggleDodaj" class="btn-primary text-xs">Dodaj postojećeg</button>
+                        <button @click="toggleAddPlayer" class="btn-primary text-xs">Kreiraj novog</button>
+                        <button @click="navigateToMatches" class="btn-info text-xs">Utakmice</button>
+                        <button @click="navigateToTrainings" class="btn-info text-xs">Treninzi</button>
+                        <button @click="navigateToTactics" class="btn-info text-xs">Taktike</button>
+                    </div>
                 </div>
                 <div v-if="igraci.length > 0">
-                    <div class="mt-5 pb-4">
-                        <div v-for="igrac in igraci" :key="igrac.idPlayer" class="mb-4 p-4 border rounded bg-slate-200">
-                            <div class="flex justify-between">
+                    <div class="space-y-3">
+                        <div v-for="igrac in igraci" :key="igrac.idPlayer" class="card-item">
+                            <div class="flex justify-between items-center">
                                 <div>
-                                    <div class="font-bold text-xl">{{ igrac.firstname }} {{ igrac.lastName }}</div>
-                                    <p class="text-gray-700">Pozicija: {{ igrac.position }}</p>
+                                    <div class="font-semibold text-lg text-fbcoach-text">{{ igrac.firstname }} {{ igrac.lastName }}</div>
+                                    <p class="text-fbcoach-text-muted text-sm">Pozicija: {{ igrac.position }}</p>
                                 </div>
-                                <div class="flex items-center space-x-2">
-                                    <button @click="navigateToDetails(igrac.idPlayer)" class="bg-blue-500 hover:bg-blue-400 text-white text-sm font-semibold px-4 py-2 rounded">Detalji</button>
-                                    <button @click="removeFromTeam(igrac.idPlayer, teamId)" class="bg-red-500 hover:bg-red-400 text-white text-sm font-semibold px-4 py-2 rounded">Ukloni iz tima</button>
+                                <div class="flex items-center gap-2">
+                                    <button @click="navigateToDetails(igrac.idPlayer)" class="btn-info text-xs">Detalji</button>
+                                    <button @click="removeFromTeam(igrac.idPlayer, teamId)" class="btn-danger text-xs">Ukloni</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div v-else class="mt-5">
-                    <p>Nema igrača za prikaz</p>
+                <div v-else class="mt-5 text-center py-8">
+                    <p class="text-fbcoach-text-muted">Nema igrača za prikaz</p>
                 </div>
             </div>
         </div>
     </main>
-    <!-- Not Logged In Section -->
-    <main v-else class="container text-white">
-        <div class="pt-8 mb-8 relative">
-            <h1 class="text-2xl text-center py-2 px-1">
+    <main v-else class="container">
+        <div class="pt-16 mb-8 text-center">
+            <h1 class="text-2xl font-medium text-fbcoach-text-muted">
                 Molimo prijavite se u sustav!
             </h1>
         </div>
@@ -136,7 +118,7 @@ export default {
     data() {
         return {
             igraci: [],
-            allPlayers: [], // Add allPlayers array to hold the list of all players
+            allPlayers: [],
             isDodajVisible: false,
             isAddPlayerVisible: false,
             noviIgrac: {
@@ -148,7 +130,7 @@ export default {
                 weight: 0,
             },
             position: ["GOALKEEPER", "DEFENDER", "MIDFIELDER", "ATTACKER"],
-            teamId: this.$route.params.teamId // added teamId to data
+            teamId: this.$route.params.teamId
         };
     },
     async mounted() {
@@ -157,7 +139,7 @@ export default {
                 const response = await RequestHandler.getRequest(
                     SPRING_URL.concat("/players?teamId=").concat(this.teamId)
                 );
-                console.log("Fetched players:", response);  // Log the response
+                console.log("Fetched players:", response);
 
                 if (Array.isArray(response)) {
                     this.igraci = response;
@@ -178,7 +160,7 @@ export default {
                     const response = await RequestHandler.getRequest(
                         SPRING_URL.concat("/players/all?teamId=").concat(this.teamId)
                     );
-                    console.log("Fetched all players:", response);  // Log the response
+                    console.log("Fetched all players:", response);
 
                     if (Array.isArray(response)) {
                         this.allPlayers = response;
@@ -219,7 +201,7 @@ export default {
             if (confirmed) {
                 try {
                     const response = await RequestHandler.deleteRequest(SPRING_URL.concat(`/players/remove?playerId=${playerId}&teamId=${teamId}`));
-                    console.log("Player removed from team successfully:", playerId);  
+                    console.log("Player removed from team successfully:", playerId);
                     this.igraci = this.igraci.filter(player => player.idPlayer !== playerId);
                 } catch (error) {
                     console.error("Error removing player from team:", error);

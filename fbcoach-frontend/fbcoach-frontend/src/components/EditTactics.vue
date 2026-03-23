@@ -1,37 +1,31 @@
 <template>
-    <div class="container antialiased text-black">
-      <div class="flex items-center w-full">
-        <div class="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
-          <button @click="goBack"
-            class="bg-gray-500 hover:bg-gray-400 text-white text-sm font-semibold px-4 py-2 rounded">
-            Povratak
+    <div class="min-h-[80vh] flex items-center justify-center px-4">
+      <div class="w-full max-w-md card">
+        <button @click="goBack" class="btn-secondary mb-4">
+          Povratak
+        </button>
+        <span class="form-title">Uredi Taktiku</span>
+        <form @submit.prevent="updateTactic" class="space-y-5">
+          <div>
+            <label class="label">Ime</label>
+            <input v-model="tactic.name" type="text" required class="input-field" />
+          </div>
+          <div>
+            <label class="label">Opis</label>
+            <textarea v-model="tactic.description" required class="input-field min-h-[80px]"></textarea>
+          </div>
+          <button class="btn-primary w-full py-3">
+            Ažuriraj
           </button>
-          <span class="block w-full text-xl font-bold mt-4 mb-4">Uredi Taktiku</span>
-          <form @submit.prevent="updateTactic" class="mb-4">
-            <div class="mb-4 md:w-full">
-              <label class="block text-xs mb-1">Ime</label>
-              <input v-model="tactic.name" type="text" required
-                class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-            </div>
-            <div class="mb-4 md:w-full">
-              <label class="block text-xs mb-1">Opis</label>
-              <textarea v-model="tactic.description" required
-                class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300"></textarea>
-            </div>
-            <button
-              class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-              Ažuriraj
-            </button>
-          </form>
-        </div>
+        </form>
       </div>
     </div>
   </template>
-  
+
   <script>
   import RequestHandler from "../RequestHandler.js";
   import { SPRING_URL } from "../constants.js";
-  
+
   export default {
     data() {
       return {
@@ -49,7 +43,7 @@
         const response = await RequestHandler.getRequest(
           SPRING_URL.concat(`/tactics/`).concat(idTactics)
         );
-        console.log("Fetched tactic for edit:", response);  // Log the response
+        console.log("Fetched tactic for edit:", response);
         this.tactic = response;
       } catch (error) {
         console.error("Error fetching tactic for edit:", error);
@@ -62,7 +56,7 @@
             SPRING_URL.concat(`/tactics/edit/${this.tactic.idTactics}`),
             this.tactic
           );
-          this.$router.push({ name: 'ListTactics', params: { teamId: this.tactic.teamId } }); // Redirect to the list of tactics
+          this.$router.push({ name: 'ListTactics', params: { teamId: this.tactic.teamId } });
         } catch (error) {
           console.error("Error updating tactic:", error);
         }
@@ -73,4 +67,3 @@
     },
   };
   </script>
-  

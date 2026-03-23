@@ -1,74 +1,73 @@
 <template>
-    <div class="container antialiased text-black">
+    <div class="container mt-6">
       <div v-if="isDodajVisible">
-        <!-- Add Attendance Section -->
-        <div class="antialiased text-black">
-          <div class="flex items-center w-full">
-            <div class="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
-              <button @click="toggleDodaj"
-                class="bg-gray-500 hover:bg-gray-400 text-white text-sm font-semibold px-4 py-2 rounded">
-                Povratak
+        <div class="flex items-center justify-center px-4">
+          <div class="w-full max-w-md card">
+            <button @click="toggleDodaj" class="btn-secondary mb-4">
+              Povratak
+            </button>
+            <span class="form-title">Dodaj novo prisustvo</span>
+            <form @submit.prevent="dodajNovoPrisustvo" class="space-y-5">
+              <div>
+                <label class="label">Datum</label>
+                <input v-model="novoPrisustvo.date" type="date" required class="input-field" />
+              </div>
+              <div>
+                <label class="label">Prisutnost</label>
+                <select v-model="novoPrisustvo.present" required class="input-field">
+                  <option v-for="present in presentTypes" :key="present" :value="present">{{ present }}</option>
+                </select>
+              </div>
+              <div>
+                <label class="label">Tip</label>
+                <select v-model="novoPrisustvo.type" required class="input-field">
+                  <option v-for="type in attendanceTypes" :key="type" :value="type">{{ type }}</option>
+                </select>
+              </div>
+              <button class="btn-primary w-full py-3">
+                Dodaj
               </button>
-              <span class="block w-full text-xl font-bold mt-4 mb-4">Dodaj novo prisustvo</span>
-              <form @submit.prevent="dodajNovoPrisustvo" class="mb-4">
-                <div class="mb-4 md:w-full">
-                  <label class="block text-xs mb-1">Datum</label>
-                  <input v-model="novoPrisustvo.date" type="date" required
-                    class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-                </div>
-                <div class="mb-4 md:w-full">
-                  <label class="block text-xs mb-1">Prisutnost</label>
-                  <select v-model="novoPrisustvo.present" required
-                    class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300">
-                    <option v-for="present in presentTypes" :key="present" :value="present">{{ present }}</option>
-                  </select>
-                </div>
-                <div class="mb-4 md:w-full">
-                  <label class="block text-xs mb-1">Tip</label>
-                  <select v-model="novoPrisustvo.type" required
-                    class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300">
-                    <option v-for="type in attendanceTypes" :key="type" :value="type">{{ type }}</option>
-                  </select>
-                </div>
-                <button
-                  class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-                  Dodaj
-                </button>
-              </form>
-            </div>
+            </form>
           </div>
         </div>
       </div>
-      <div v-else class="flex items-center w-full">
-        <div class="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
-          <button @click="toggleDodaj"
-            class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-            Dodaj novo prisustvo
-          </button>
-          <span class="block w-full text-xl font-bold mt-4 mb-4">Prisustva</span>
+      <div v-else>
+        <div class="card">
+          <div class="flex items-center justify-between mb-6">
+            <h1 class="page-title">Prisustva</h1>
+            <button @click="toggleDodaj" class="btn-primary">
+              + Dodaj prisustvo
+            </button>
+          </div>
           <div v-if="attendances.length > 0">
-            <div v-for="attendance in attendances" :key="attendance.idAttendance" class="mb-4 p-4 border rounded bg-slate-200">
-              <p class="text-gray-700">Datum: {{ formatDate(attendance.date) }}</p>
-              <p class="text-gray-700">Prisutan: {{ attendance.present}}</p>
-              <p class="text-gray-700">Tip: {{ attendance.type }}</p>
-              <div class="flex space-x-2 mt-4">
-                <button @click="navigateToEdit(attendance.idAttendance)" class="bg-yellow-500 hover:bg-yellow-400 text-white text-sm font-semibold px-4 py-2 rounded">Uredi</button>
-                <button @click="deleteAttendance(attendance.idAttendance)" class="bg-red-500 hover:bg-red-400 text-white text-sm font-semibold px-4 py-2 rounded">Obriši</button>
+            <div class="space-y-3">
+              <div v-for="attendance in attendances" :key="attendance.idAttendance" class="card-item">
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                  <div class="space-y-1">
+                    <p class="text-fbcoach-text-muted text-sm">{{ formatDate(attendance.date) }}</p>
+                    <p class="text-fbcoach-text">Prisutan: <span :class="attendance.present === 'YES' ? 'text-fbcoach-primary' : 'text-fbcoach-danger'">{{ attendance.present }}</span></p>
+                    <p class="text-fbcoach-text-muted text-sm">Tip: {{ attendance.type }}</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <button @click="navigateToEdit(attendance.idAttendance)" class="btn-warning text-xs">Uredi</button>
+                    <button @click="deleteAttendance(attendance.idAttendance)" class="btn-danger text-xs">Obriši</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div v-else class="mt-5">
-            <p>Nema prisustava za prikaz.</p>
+          <div v-else class="mt-5 text-center py-8">
+            <p class="text-fbcoach-text-muted">Nema prisustava za prikaz.</p>
           </div>
         </div>
       </div>
     </div>
   </template>
-  
+
   <script>
   import RequestHandler from "./../RequestHandler.js";
   import { SPRING_URL } from "./../constants.js";
-  
+
   export default {
     data() {
       return {
@@ -80,7 +79,7 @@
           type: "",
           playerId: this.$route.params.playerId,
         },
-        attendanceTypes: ["MATCH", "TRAINING"], // Example attendance types
+        attendanceTypes: ["MATCH", "TRAINING"],
         presentTypes: ["YES", "NO"]
       };
     },
@@ -90,7 +89,7 @@
         const response = await RequestHandler.getRequest(
           SPRING_URL.concat(`/attendance/player/`).concat(playerId)
         );
-        console.log("Fetched attendances:", response);  // Log the response
+        console.log("Fetched attendances:", response);
         this.attendances = response;
       } catch (error) {
         console.error("Error fetching attendances:", error);
@@ -132,4 +131,3 @@
     },
   };
   </script>
-  

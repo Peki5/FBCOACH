@@ -1,39 +1,37 @@
 <template>
-    <div class="container antialiased text-black">
-      <div class="flex items-center w-full">
-        <div class="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
-          <button @click="goBack" class="bg-gray-500 hover:bg-gray-400 text-white text-sm font-semibold px-4 py-2 rounded">
-            Povratak
+    <div class="min-h-[80vh] flex items-center justify-center px-4">
+      <div class="w-full max-w-md card">
+        <button @click="goBack" class="btn-secondary mb-4">
+          Povratak
+        </button>
+        <span class="form-title">Uredi trening</span>
+        <form @submit.prevent="updateTraining" class="space-y-5">
+          <div>
+            <label class="label">Datum</label>
+            <input v-model="training.date" type="date" required class="input-field" />
+          </div>
+          <div>
+            <label class="label">Opis</label>
+            <textarea v-model="training.description" required class="input-field min-h-[80px]"></textarea>
+          </div>
+          <div>
+            <label class="label">Tip</label>
+            <select v-model="training.type" required class="input-field">
+              <option v-for="type in trainingTypes" :key="type" :value="type">{{ type }}</option>
+            </select>
+          </div>
+          <button class="btn-primary w-full py-3">
+            Ažuriraj
           </button>
-          <span class="block w-full text-xl font-bold mt-4 mb-4">Uredi trening</span>
-          <form @submit.prevent="updateTraining" class="mb-4">
-            <div class="mb-4 md:w-full">
-              <label class="block text-xs mb-1">Datum</label>
-              <input v-model="training.date" type="date" required class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-            </div>
-            <div class="mb-4 md:w-full">
-              <label class="block text-xs mb-1">Opis</label>
-              <textarea v-model="training.description" required class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300"></textarea>
-            </div>
-            <div class="mb-4 md:w-full">
-              <label class="block text-xs mb-1">Tip</label>
-              <select v-model="training.type" required class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300">
-                <option v-for="type in trainingTypes" :key="type" :value="type">{{ type }}</option>
-              </select>
-            </div>
-            <button class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-              Ažuriraj
-            </button>
-          </form>
-        </div>
+        </form>
       </div>
     </div>
   </template>
-  
+
   <script>
   import RequestHandler from "./../RequestHandler.js";
   import { SPRING_URL } from "./../constants.js";
-  
+
   export default {
     data() {
       return {
@@ -44,7 +42,7 @@
           type: "",
           teamId: null
         },
-        trainingTypes: ["STRENGTH", "EXPLOSIVE", "RUNNING", "TACTICAL"] // Training types
+        trainingTypes: ["STRENGTH", "EXPLOSIVE", "RUNNING", "TACTICAL"]
       };
     },
     async mounted() {
@@ -53,11 +51,10 @@
         const response = await RequestHandler.getRequest(
           SPRING_URL.concat(`/training/${idTraining}`)
         );
-        
-        // Convert date format from server to 'YYYY-MM-DD'
+
         response.date = new Date(response.date).toISOString().split('T')[0];
-  
-        console.log("Fetched training for edit:", response);  // Log the response
+
+        console.log("Fetched training for edit:", response);
         this.training = response;
       } catch (error) {
         console.error("Error fetching training for edit:", error);
@@ -81,4 +78,3 @@
     },
   };
   </script>
-  

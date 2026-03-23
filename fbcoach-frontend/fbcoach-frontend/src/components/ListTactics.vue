@@ -1,69 +1,60 @@
 <template>
-    <div class="container antialiased text-black">
+    <div class="container mt-6">
       <div v-if="isDodajVisible">
-        <!-- Add Tactics Section -->
-        <div class="antialiased text-black">
-          <div class="flex items-center w-full">
-            <div class="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
-              <button @click="toggleDodaj"
-                class="bg-gray-500 hover:bg-gray-400 text-white text-sm font-semibold px-4 py-2 rounded">
-                Povratak
+        <div class="flex items-center justify-center px-4">
+          <div class="w-full max-w-md card">
+            <button @click="toggleDodaj" class="btn-secondary mb-4">
+              Povratak
+            </button>
+            <span class="form-title">Dodaj novu taktiku</span>
+            <form @submit.prevent="dodajNovuTaktiku" class="space-y-5">
+              <div>
+                <label class="label">Ime</label>
+                <input v-model="novaTaktika.name" type="text" required class="input-field" />
+              </div>
+              <div>
+                <label class="label">Opis</label>
+                <textarea v-model="novaTaktika.description" required class="input-field min-h-[80px]"></textarea>
+              </div>
+              <button class="btn-primary w-full py-3">
+                Dodaj
               </button>
-              <span class="block w-full text-xl font-bold mt-4 mb-4">Dodaj novu taktiku</span>
-              <form @submit.prevent="dodajNovuTaktiku" class="mb-4">
-                <div class="mb-4 md:w-full">
-                  <label class="block text-xs mb-1">Ime</label>
-                  <input v-model="novaTaktika.name" type="text" required
-                    class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-                </div>
-                <div class="mb-4 md:w-full">
-                  <label class="block text-xs mb-1">Opis</label>
-                  <textarea v-model="novaTaktika.description" required
-                    class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300"></textarea>
-                </div>
-                <button
-                  class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-                  Dodaj
-                </button>
-              </form>
-            </div>
+            </form>
           </div>
         </div>
       </div>
-      <div v-else class="flex items-center w-full">
-        <div class="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
-          <button @click="toggleDodaj"
-            class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-            Dodaj novu taktiku
-          </button>
-          <span class="block w-full text-xl font-bold mt-4 mb-4">Taktike</span>
+      <div v-else>
+        <div class="card">
+          <div class="flex items-center justify-between mb-6">
+            <h1 class="page-title">Taktike</h1>
+            <button @click="toggleDodaj" class="btn-primary">
+              + Dodaj taktiku
+            </button>
+          </div>
           <div v-if="tactics.length > 0">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div v-for="tactic in tactics" :key="tactic.idTactics"
-                class="mb-4 p-4 border rounded bg-slate-200">
-                <p class="text-gray-700">Ime: {{ tactic.name }}</p>
-                <p class="text-gray-700">Opis: {{ tactic.description }}</p>
-                <div class="flex space-x-2 mt-4">
-                  <button @click="navigateToEdit(tactic.idTactics)"
-                    class="bg-yellow-500 hover:bg-yellow-400 text-white text-sm font-semibold px-4 py-2 rounded">Uredi</button>
-                  <button @click="deleteTactic(tactic.idTactics)"
-                    class="bg-red-500 hover:bg-red-400 text-white text-sm font-semibold px-4 py-2 rounded">Obriši</button>
+              <div v-for="tactic in tactics" :key="tactic.idTactics" class="card-item">
+                <p class="text-fbcoach-text font-semibold mb-1">{{ tactic.name }}</p>
+                <p class="text-fbcoach-text-muted text-sm">{{ tactic.description }}</p>
+                <div class="flex gap-2 mt-3">
+                  <button @click="navigateToEdit(tactic.idTactics)" class="btn-warning text-xs">Uredi</button>
+                  <button @click="deleteTactic(tactic.idTactics)" class="btn-danger text-xs">Obriši</button>
                 </div>
               </div>
             </div>
           </div>
-          <div v-else class="mt-5">
-            <p>Nema taktika za prikaz.</p>
+          <div v-else class="mt-5 text-center py-8">
+            <p class="text-fbcoach-text-muted">Nema taktika za prikaz.</p>
           </div>
         </div>
       </div>
     </div>
   </template>
-  
+
   <script>
   import RequestHandler from "./../RequestHandler.js";
   import { SPRING_URL } from "./../constants.js";
-  
+
   export default {
     data() {
       return {
@@ -82,7 +73,7 @@
         const response = await RequestHandler.getRequest(
           SPRING_URL.concat(`/tactics?teamId=`).concat(teamId)
         );
-        console.log("Fetched tactics:", response);  // Log the response
+        console.log("Fetched tactics:", response);
         this.tactics = response;
       } catch (error) {
         console.error("Error fetching tactics:", error);
@@ -120,12 +111,3 @@
     },
   };
   </script>
-  
-  <style scoped>
-  .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
-  }
-  </style>
-  

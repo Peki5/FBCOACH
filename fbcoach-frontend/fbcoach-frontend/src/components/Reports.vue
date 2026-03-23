@@ -1,81 +1,72 @@
 <template>
     <main v-if="$store.state.user">
       <div v-if="isAddVisible">
-        <!-- Add Report Section -->
-        <div class="antialiased text-black">
-          <div class="flex items-center w-full">
-            <div class="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
-              <button @click="toggleAdd" class="bg-gray-500 hover:bg-gray-400 text-white text-sm font-semibold px-4 py-2 rounded">
-                Povratak
+        <div class="min-h-[80vh] flex items-center justify-center px-4">
+          <div class="w-full max-w-md card">
+            <button @click="toggleAdd" class="btn-secondary mb-4">
+              Povratak
+            </button>
+            <span class="form-title">Dodaj novi izvještaj</span>
+            <form @submit.prevent="addNewReport" class="space-y-5">
+              <div>
+                <label class="label">Datum</label>
+                <input v-model="newReport.date" type="date" required class="input-field" />
+              </div>
+              <div>
+                <label class="label">Opis</label>
+                <textarea v-model="newReport.description" required class="input-field min-h-[80px]"></textarea>
+              </div>
+              <button class="btn-primary w-full py-3">
+                Dodaj
               </button>
-              <span class="block w-full text-xl font-bold mt-4 mb-4">Dodaj novi izvještaj</span>
-              <form @submit.prevent="addNewReport" class="mb-4">
-                <div class="mb-4 md:w-full">
-                  <label class="block text-s mb-1">Datum</label>
-                  <input v-model="newReport.date" type="date" required class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300" />
-                </div>
-                <div class="mb-4 md:w-full">
-                  <label class="block text-s mb-1">Opis</label>
-                  <textarea v-model="newReport.description" required class="w-full border rounded p-2 outline-none focus:outline focus:outline-slate-300"></textarea>
-                </div>
-                <button class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-                  Dodaj
-                </button>
-              </form>
-            </div>
+            </form>
           </div>
         </div>
       </div>
-  
-      <!-- List of Reports Section -->
-      <div v-else class="container mt-4 text-black bg-white rounded">
-        <div class="pt-4 pb-2 mb-8 relative">
-          <div>
-            <h1 class="text-2xl py-2 px-1">Izvještaji</h1>
-            <button @click="toggleAdd" class="bg-fbcoach-primary hover:bg-fbcoach-secondary text-white text-sm font-semibold px-4 py-2 rounded">
-              Dodaj izvještaj
+
+      <div v-else class="container mt-6">
+        <div class="card">
+          <div class="flex items-center justify-between mb-6">
+            <h1 class="page-title">Izvještaji</h1>
+            <button @click="toggleAdd" class="btn-primary">
+              + Dodaj izvještaj
             </button>
           </div>
-  
+
           <div v-if="reports.length > 0">
-            <div class="mt-5 pb-4 grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               <div v-for="report in reports" :key="report.idReport">
-                <div class="w-full h-full rounded overflow-hidden shadow-lg hover:cursor-pointer border bg-slate-200 p-2">
-                  <div class="px-6 py-4">
-                    <div class="font-bold text-xl mb-2">Datum: {{ formatDate(report.date) }}</div>
-                    <p class="text-gray-700 text-base">
-                      <span class="font-semibold">Opis:</span> {{ report.description }}
-                    </p>
-                    <button @click="deleteReport(report.idReport)" class="bg-red-500 hover:bg-red-400 text-white text-sm font-semibold px-4 py-2 rounded">
-                      Delete
-                    </button>
-                    <button @click="navigateToEditPage(report.idReport)" class="bg-yellow-500 hover:bg-yellow-400 text-white text-sm font-semibold px-4 py-2 rounded">Edit</button>
+                <div class="card-item">
+                  <div class="font-semibold text-fbcoach-text mb-1">{{ formatDate(report.date) }}</div>
+                  <p class="text-fbcoach-text-muted text-sm">{{ report.description }}</p>
+                  <div class="flex gap-2 mt-4">
+                    <button @click="navigateToEditPage(report.idReport)" class="btn-warning text-xs">Edit</button>
+                    <button @click="deleteReport(report.idReport)" class="btn-danger text-xs">Delete</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div v-else class="mt-5">
-            <p>Nema izvještaja za prikaz</p>
+          <div v-else class="mt-5 text-center py-8">
+            <p class="text-fbcoach-text-muted">Nema izvještaja za prikaz</p>
           </div>
         </div>
       </div>
     </main>
-  
-    <!-- Not Logged In Section -->
-    <main v-else class="container text-white">
-      <div class="pt-8 mb-8 relative">
-        <h1 class="text-2xl text-center py-2 px-1">
+
+    <main v-else class="container">
+      <div class="pt-16 mb-8 text-center">
+        <h1 class="text-2xl font-medium text-fbcoach-text-muted">
           Molimo prijavite se u sustav!
         </h1>
       </div>
     </main>
   </template>
-  
+
   <script>
   import RequestHandler from "./../RequestHandler.js";
   import { SPRING_URL } from "./../constants.js";
-  
+
   export default {
     data() {
       return {
@@ -92,7 +83,7 @@
         try {
           const response = await RequestHandler.getRequest(SPRING_URL.concat("/report"));
           console.log("Fetched reports:", response);
-  
+
           if (Array.isArray(response)) {
             this.reports = response;
             this.reports.sort((a, b) => (a.idReport > b.idReport ? 1 : -1));
@@ -133,7 +124,6 @@
         }
       },
       formatDate(date) {
-        // Format date as desired
         return new Date(date).toLocaleDateString("hr-HR");
       },
       navigateToEditPage(id) {
@@ -142,4 +132,3 @@
     },
   };
   </script>
-  
