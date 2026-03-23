@@ -24,7 +24,7 @@
 
 <script>
 import axios from 'axios'
-import { SPRING_URL } from './../constants.js'
+import { SPRING_URL } from '../constants'
 
 export default {
     data() {

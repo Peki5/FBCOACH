@@ -89,10 +89,8 @@
         const response = await RequestHandler.getRequest(
           SPRING_URL.concat(`/attendance/player/`).concat(playerId)
         );
-        console.log("Fetched attendances:", response);
         this.attendances = response;
-      } catch (error) {
-        console.error("Error fetching attendances:", error);
+      } catch {
       }
     },
     methods: {
@@ -109,8 +107,7 @@
           try {
             await RequestHandler.deleteRequest(SPRING_URL.concat(`/attendance/delete/`).concat(id));
             this.attendances = this.attendances.filter(attendance => attendance.idAttendance !== id);
-          } catch (error) {
-            console.error("Error deleting attendance:", error);
+          } catch {
           }
         }
       },
@@ -118,15 +115,11 @@
         try {
           await RequestHandler.postRequest(SPRING_URL.concat("/attendance/add"), this.novoPrisustvo);
           this.$router.go();
-        } catch (error) {
-          console.error("Error adding new attendance:", error);
+        } catch {
         }
       },
       toggleDodaj() {
         this.isDodajVisible = !this.isDodajVisible;
-      },
-      goBack() {
-        this.$router.go(-1);
       },
     },
   };

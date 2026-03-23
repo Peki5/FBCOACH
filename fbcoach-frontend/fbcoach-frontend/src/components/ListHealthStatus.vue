@@ -73,14 +73,12 @@ export default {
             const response = await RequestHandler.getRequest(
                 SPRING_URL.concat(`/healthstatuses/player/`).concat(playerId)
             );
-            console.log("Fetched health statuses:", response);
             this.statuses = response.map(item => ({
                 idHealthStatus: item.idHealthStatus,
                 date: item.date,
                 statusNotes: item.statusNotes
             }));
-        } catch (error) {
-            console.error("Error fetching health statuses:", error);
+        } catch {
         }
     },
     methods: {
@@ -97,8 +95,7 @@ export default {
                 try {
                     await RequestHandler.deleteRequest(SPRING_URL.concat(`/healthstatuses/delete/`).concat(id));
                     this.statuses = this.statuses.filter(status => status.idHealthStatus !== id);
-                } catch (error) {
-                    console.error("Error deleting health status:", error);
+                } catch {
                 }
             }
         },
@@ -112,19 +109,14 @@ export default {
                 );
 
                 if (response) {
-                    console.log("Added new health status:", response);
                     this.statuses.push(response);
                     this.toggleDodaj();
                 }
-            } catch (error) {
-                console.error("Error adding new health status:", error);
+            } catch {
             }
         },
         toggleDodaj() {
             this.isDodajVisible = !this.isDodajVisible;
-        },
-        goBack() {
-            this.$router.go(-1);
         },
     },
 };

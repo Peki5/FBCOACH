@@ -57,10 +57,8 @@
           SPRING_URL.concat(`/matches/`).concat(idMatch)
         );
         response.date = new Date(response.date).toISOString().split('T')[0];
-        console.log("Fetched match for edit:", response);
         this.match = response;
-      } catch (error) {
-        console.error("Error fetching match for edit:", error);
+      } catch {
       }
     },
     methods: {
@@ -71,8 +69,7 @@
             this.match
           );
           this.$router.push({ name: 'ListMatches', params: { teamId: this.match.teamId } });
-        } catch (error) {
-          console.error("Error updating match:", error);
+        } catch {
         }
       },
       goBack() {

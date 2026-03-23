@@ -95,10 +95,8 @@
         const response = await RequestHandler.getRequest(
           SPRING_URL.concat(`/matches?teamId=`).concat(teamId)
         );
-        console.log("Fetched matches:", response);
         this.matches = response;
-      } catch (error) {
-        console.error("Error fetching matches:", error);
+      } catch {
       }
     },
     methods: {
@@ -118,8 +116,7 @@
           try {
             await RequestHandler.deleteRequest(SPRING_URL.concat(`/matches/delete/`).concat(id));
             this.matches = this.matches.filter(match => match.idMatch !== id);
-          } catch (error) {
-            console.error("Error deleting match:", error);
+          } catch {
           }
         }
       },
@@ -127,15 +124,11 @@
         try {
           await RequestHandler.postRequest(SPRING_URL.concat("/matches/add"), this.novaUtakmica);
           this.$router.go();
-        } catch (error) {
-          console.error("Error adding new match:", error);
+        } catch {
         }
       },
       toggleDodaj() {
         this.isDodajVisible = !this.isDodajVisible;
-      },
-      goBack() {
-        this.$router.go(-1);
       },
     },
   };

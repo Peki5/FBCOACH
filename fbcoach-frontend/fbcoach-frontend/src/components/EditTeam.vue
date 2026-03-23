@@ -24,7 +24,7 @@
 
   <script>
   import RequestHandler from "./../RequestHandler.js";
-  import { SPRING_URL } from "./../constants.js";
+  import { SPRING_URL } from "../constants";
 
   export default {
     data() {
@@ -42,10 +42,8 @@
         const response = await RequestHandler.getRequest(
           SPRING_URL.concat(`/team/${idTeam}`)
         );
-        console.log("Fetched team for edit:", response);
         this.tim = response;
-      } catch (error) {
-        console.error("Error fetching team for edit:", error);
+      } catch {
       }
     },
     methods: {
@@ -56,8 +54,7 @@
             this.tim
           );
           this.$router.push({ name: 'home' });
-        } catch (error) {
-          console.error("Error updating team:", error);
+        } catch {
         }
       },
       goBack() {

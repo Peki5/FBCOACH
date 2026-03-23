@@ -71,7 +71,7 @@
 
 <script>
 import RequestHandler from "./../RequestHandler.js";
-import { SPRING_URL } from "./../constants.js";
+import { SPRING_URL } from "../constants";
 
 export default {
   data() {
@@ -90,16 +90,12 @@ export default {
         const response = await RequestHandler.getRequest(
           SPRING_URL.concat("/team")
         );
-        console.log("Fetched teams:", response);
 
         if (Array.isArray(response)) {
           this.timovi = response;
           this.timovi.sort((a, b) => (a.idTeam > b.idTeam ? 1 : -1));
-        } else {
-          console.warn("Unexpected data format:", response);
         }
-      } catch (error) {
-        console.error("Error fetching teams:", error);
+      } catch {
       }
     }
   },
@@ -120,11 +116,9 @@ export default {
 
       if (confirmed) {
         try {
-          const response = await RequestHandler.deleteRequest(SPRING_URL.concat(`/team/delete/${id}`));
-          console.log("Team deleted successfully:", id);
+          await RequestHandler.deleteRequest(SPRING_URL.concat(`/team/delete/${id}`));
           this.timovi = this.timovi.filter(team => team.idTeam !== id);
-        } catch (error) {
-          console.error("Error deleting team:", error);
+        } catch {
         }
       }
     },

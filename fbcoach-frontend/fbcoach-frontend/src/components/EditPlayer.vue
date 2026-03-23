@@ -66,10 +66,8 @@
           SPRING_URL.concat(`/players/${idPlayer}`)
         );
         response.dateOfBirth = new Date(response.dateOfBirth).toISOString().split('T')[0];
-        console.log("Fetched player for edit:", response);
         this.player = response;
-      } catch (error) {
-        console.error("Error fetching player for edit:", error);
+      } catch {
       }
     },
     methods: {
@@ -80,8 +78,7 @@
             this.player
           );
           this.$router.push({ name: 'ListPlayers', params: { teamId: this.player.teamIds[0] } });
-        } catch (error) {
-          console.error("Error updating player:", error);
+        } catch {
         }
       },
       goBack() {

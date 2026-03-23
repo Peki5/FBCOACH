@@ -40,10 +40,8 @@ export default {
         const playerId = this.$route.params.id;
         try {
             const response = await RequestHandler.getRequest(SPRING_URL.concat("/players/").concat(playerId));
-            console.log("Fetched player details:", response);
             this.player = response;
-        } catch (error) {
-            console.error("Error fetching player details:", error);
+        } catch {
         }
     },
     methods: {
@@ -60,8 +58,7 @@ export default {
                 try {
                     await RequestHandler.deleteRequest(SPRING_URL.concat("/players/delete/").concat(id));
                     this.$router.go(-1);
-                } catch (error) {
-                    console.error("Error deleting player:", error);
+                } catch {
                 }
             }
         },

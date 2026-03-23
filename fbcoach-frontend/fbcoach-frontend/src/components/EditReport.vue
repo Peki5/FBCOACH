@@ -19,7 +19,7 @@
 
   <script>
   import RequestHandler from "./../RequestHandler.js";
-  import { SPRING_URL } from "./../constants.js";
+  import { SPRING_URL } from "../constants";
 
   export default {
     data() {
@@ -37,19 +37,16 @@
         const response = await RequestHandler.getRequest(SPRING_URL.concat(`/report/${reportId}`));
         this.editedReport = response;
         this.editedReport.date = new Date(this.editedReport.date).toISOString().split('T')[0];
-      } catch (error) {
-        console.error("Error fetching report:", error);
+      } catch {
       }
     },
     methods: {
       async editReport() {
         const reportId = this.$route.params.id;
         try {
-          const response = await RequestHandler.putRequest(SPRING_URL.concat(`/report/edit/${reportId}`), this.editedReport);
-          console.log("Report edited successfully:", response);
+          await RequestHandler.putRequest(SPRING_URL.concat(`/report/edit/${reportId}`), this.editedReport);
           this.$router.push({ name: 'Reports' });
-        } catch (error) {
-          console.error("Error editing report:", error);
+        } catch {
         }
       }
     }

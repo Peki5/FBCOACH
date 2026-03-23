@@ -148,34 +148,28 @@
           SPRING_URL.concat(`/matches/`).concat(idMatch)
         );
         matchResponse.date = new Date(matchResponse.date).toISOString().split('T')[0];
-        console.log("Fetched match details:", matchResponse);
         this.match = matchResponse;
 
         const tacticsResponse = await RequestHandler.getRequest(
           SPRING_URL.concat(`/tactics?teamId=`).concat(this.match.teamId)
         );
-        console.log("Fetched tactics for team:", tacticsResponse);
         this.tactics = tacticsResponse;
 
         const playersResponse = await RequestHandler.getRequest(
           SPRING_URL.concat(`/players?teamId=`).concat(this.match.teamId)
         );
-        console.log("Fetched players for team:", playersResponse);
         this.players = playersResponse;
 
         const tacticsApplicationsResponse = await RequestHandler.getRequest(
           SPRING_URL.concat(`/tacticsapplication/match/`).concat(idMatch)
         );
-        console.log("Fetched tactics applications:", tacticsApplicationsResponse);
         this.tacticsApplications = tacticsApplicationsResponse;
 
         const playerMatchStatsResponse = await RequestHandler.getRequest(
           SPRING_URL.concat(`/playermatchstats/match/`).concat(idMatch)
         );
-        console.log("Fetched player match stats:", playerMatchStatsResponse);
         this.playerMatchStats = playerMatchStatsResponse;
-      } catch (error) {
-        console.error("Error fetching match details:", error);
+      } catch {
       }
     },
     computed: {
@@ -193,7 +187,6 @@
             SPRING_URL.concat("/tacticsapplication/add"),
             this.novaTaktika
           );
-          console.log("Added new tactics application:", response);
           this.tacticsApplications.push(response);
           this.novaTaktika = {
             description: "",
@@ -201,8 +194,7 @@
             matchId: this.$route.params.id,
           };
           this.toggleTaktika();
-        } catch (error) {
-          console.error("Error adding new tactics application:", error);
+        } catch {
         }
       },
       async dodajStatistiku() {
@@ -211,11 +203,9 @@
             SPRING_URL.concat("/playermatchstats/add"),
             this.novaStatistika
           );
-          console.log("Added new player match stats:", response);
           this.playerMatchStats.push(response);
           this.toggleStatistika();
-        } catch (error) {
-          console.error("Error adding new player match stats:", error);
+        } catch {
         }
       },
       toggleTaktika() {

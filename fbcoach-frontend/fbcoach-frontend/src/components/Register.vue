@@ -41,8 +41,7 @@ export default {
                 prezime: '',
                 email: '',
                 lozinka: ''
-            },
-            message: ''
+            }
         }
     },
     methods: {

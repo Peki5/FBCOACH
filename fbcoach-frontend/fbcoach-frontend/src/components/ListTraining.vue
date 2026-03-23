@@ -95,16 +95,12 @@
           const response = await RequestHandler.getRequest(
             SPRING_URL.concat(`/training?teamId=${this.$route.params.teamId}`)
           );
-          console.log("Fetched trainings:", response);
 
           if (Array.isArray(response)) {
             this.treninzi = response;
             this.treninzi.sort((a, b) => new Date(a.date) - new Date(b.date));
-          } else {
-            console.warn("Unexpected data format:", response);
           }
-        } catch (error) {
-          console.error("Error fetching trainings:", error);
+        } catch {
         }
       }
     },
@@ -128,11 +124,9 @@
 
         if (confirmed) {
           try {
-            const response = await RequestHandler.deleteRequest(SPRING_URL.concat(`/training/delete/${id}`));
-            console.log("Training deleted successfully:", id);
+            await RequestHandler.deleteRequest(SPRING_URL.concat(`/training/delete/${id}`));
             this.treninzi = this.treninzi.filter(training => training.idTraining !== id);
-          } catch (error) {
-            console.error("Error deleting training:", error);
+          } catch {
           }
         }
       },

@@ -55,10 +55,8 @@
           SPRING_URL.concat(`/attendance/`).concat(idAttendance)
         );
         response.date = new Date(response.date).toISOString().split('T')[0];
-        console.log("Fetched attendance for edit:", response);
         this.attendance = response;
-      } catch (error) {
-        console.error("Error fetching attendance for edit:", error);
+      } catch {
       }
     },
     methods: {
@@ -69,8 +67,7 @@
             this.attendance
           );
           this.$router.push({ name: 'ListAttendance', params: { playerId: this.attendance.playerId } });
-        } catch (error) {
-          console.error("Error updating attendance:", error);
+        } catch {
         }
       },
       goBack() {

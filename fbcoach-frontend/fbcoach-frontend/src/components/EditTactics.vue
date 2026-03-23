@@ -43,10 +43,8 @@
         const response = await RequestHandler.getRequest(
           SPRING_URL.concat(`/tactics/`).concat(idTactics)
         );
-        console.log("Fetched tactic for edit:", response);
         this.tactic = response;
-      } catch (error) {
-        console.error("Error fetching tactic for edit:", error);
+      } catch {
       }
     },
     methods: {
@@ -57,8 +55,7 @@
             this.tactic
           );
           this.$router.push({ name: 'ListTactics', params: { teamId: this.tactic.teamId } });
-        } catch (error) {
-          console.error("Error updating tactic:", error);
+        } catch {
         }
       },
       goBack() {

@@ -54,10 +54,8 @@
 
         response.date = new Date(response.date).toISOString().split('T')[0];
 
-        console.log("Fetched training for edit:", response);
         this.training = response;
-      } catch (error) {
-        console.error("Error fetching training for edit:", error);
+      } catch {
       }
     },
     methods: {
@@ -68,8 +66,7 @@
             this.training
           );
           this.$router.push({ name: 'ListTraining', params: { teamId: this.training.teamId } });
-        } catch (error) {
-          console.error("Error updating training:", error);
+        } catch {
         }
       },
       goBack() {

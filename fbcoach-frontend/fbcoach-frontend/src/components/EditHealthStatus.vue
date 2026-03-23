@@ -44,10 +44,8 @@
           SPRING_URL.concat(`/healthstatuses/`).concat(idHealthStatus)
         );
         response.date = new Date(response.date).toISOString().split('T')[0];
-        console.log("Fetched health status for edit:", response);
         this.status = response;
-      } catch (error) {
-        console.error("Error fetching health status for edit:", error);
+      } catch {
       }
     },
     methods: {
@@ -58,8 +56,7 @@
             this.status
           );
           this.$router.push({ name: 'ListHealthStatus', params: { playerId: this.status.playerId } });
-        } catch (error) {
-          console.error("Error updating health status:", error);
+        } catch {
         }
       },
       goBack() {

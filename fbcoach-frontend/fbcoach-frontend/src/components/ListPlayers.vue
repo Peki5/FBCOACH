@@ -139,16 +139,12 @@ export default {
                 const response = await RequestHandler.getRequest(
                     SPRING_URL.concat("/players?teamId=").concat(this.teamId)
                 );
-                console.log("Fetched players:", response);
 
                 if (Array.isArray(response)) {
                     this.igraci = response;
                     this.igraci.sort((a, b) => (a.idPlayer > b.idPlayer ? 1 : -1));
-                } else {
-                    console.warn("Unexpected data format:", response);
                 }
-            } catch (error) {
-                console.error("Error fetching players:", error);
+            } catch {
             }
         }
     },
@@ -160,16 +156,12 @@ export default {
                     const response = await RequestHandler.getRequest(
                         SPRING_URL.concat("/players/all?teamId=").concat(this.teamId)
                     );
-                    console.log("Fetched all players:", response);
 
                     if (Array.isArray(response)) {
                         this.allPlayers = response;
                         this.allPlayers.sort((a, b) => (a.idPlayer > b.idPlayer ? 1 : -1));
-                    } else {
-                        console.warn("Unexpected data format:", response);
                     }
-                } catch (error) {
-                    console.error("Error fetching all players:", error);
+                } catch {
                 }
             }
         },
@@ -180,8 +172,7 @@ export default {
             try {
                 await RequestHandler.postRequest(SPRING_URL.concat("/players/add"), this.noviIgrac);
                 this.$router.go();
-            } catch (error) {
-                console.error("Error adding new player:", error);
+            } catch {
             }
         },
         async addExistingPlayer(playerId) {
@@ -192,27 +183,21 @@ export default {
             try {
                 await RequestHandler.postRequest(SPRING_URL.concat("/players/addToTeam"), dataIgrac);
                 this.$router.go();
-            } catch (error) {
-                console.error("Error adding existing player:", error);
+            } catch {
             }
         },
         async removeFromTeam(playerId, teamId) {
             const confirmed = confirm("Jeste li sigurni?");
             if (confirmed) {
                 try {
-                    const response = await RequestHandler.deleteRequest(SPRING_URL.concat(`/players/remove?playerId=${playerId}&teamId=${teamId}`));
-                    console.log("Player removed from team successfully:", playerId);
+                    await RequestHandler.deleteRequest(SPRING_URL.concat(`/players/remove?playerId=${playerId}&teamId=${teamId}`));
                     this.igraci = this.igraci.filter(player => player.idPlayer !== playerId);
-                } catch (error) {
-                    console.error("Error removing player from team:", error);
+                } catch {
                 }
             }
         },
         navigateToDetails(id) {
             this.$router.push({ name: 'PlayerDetails', params: { id: id } });
-        },
-        navigateToAddPlayer() {
-            this.$router.push({ name: 'AddPlayer' });
         },
         navigateToMatches() {
             this.$router.push({ name: 'ListMatches', params: { teamId: this.teamId } });

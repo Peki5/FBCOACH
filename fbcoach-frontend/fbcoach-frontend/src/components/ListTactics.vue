@@ -73,10 +73,8 @@
         const response = await RequestHandler.getRequest(
           SPRING_URL.concat(`/tactics?teamId=`).concat(teamId)
         );
-        console.log("Fetched tactics:", response);
         this.tactics = response;
-      } catch (error) {
-        console.error("Error fetching tactics:", error);
+      } catch {
       }
     },
     methods: {
@@ -89,8 +87,7 @@
           try {
             await RequestHandler.deleteRequest(SPRING_URL.concat(`/tactics/delete/`).concat(id));
             this.tactics = this.tactics.filter(tactic => tactic.idTactics !== id);
-          } catch (error) {
-            console.error("Error deleting tactic:", error);
+          } catch {
           }
         }
       },
@@ -98,15 +95,11 @@
         try {
           await RequestHandler.postRequest(SPRING_URL.concat("/tactics/add"), this.novaTaktika);
           this.$router.go();
-        } catch (error) {
-          console.error("Error adding new tactic:", error);
+        } catch {
         }
       },
       toggleDodaj() {
         this.isDodajVisible = !this.isDodajVisible;
-      },
-      goBack() {
-        this.$router.go(-1);
       },
     },
   };

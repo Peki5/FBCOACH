@@ -82,16 +82,12 @@
       if (this.$store.state.user) {
         try {
           const response = await RequestHandler.getRequest(SPRING_URL.concat("/report"));
-          console.log("Fetched reports:", response);
 
           if (Array.isArray(response)) {
             this.reports = response;
             this.reports.sort((a, b) => (a.idReport > b.idReport ? 1 : -1));
-          } else {
-            console.warn("Unexpected data format:", response);
           }
-        } catch (error) {
-          console.error("Error fetching reports:", error);
+        } catch {
         }
       }
     },
@@ -102,24 +98,20 @@
       async addNewReport() {
         try {
           const response = await RequestHandler.postRequest(SPRING_URL.concat("/report/add"), this.newReport);
-          console.log("Report added successfully:", response);
           this.reports.push(response);
           this.reports.sort((a, b) => (a.idReport > b.idReport ? 1 : -1));
           this.newReport = { date: "", description: "" };
           this.isAddVisible = false;
-        } catch (error) {
-          console.error("Error adding report:", error);
+        } catch {
         }
       },
       async deleteReport(id) {
         const confirmed = confirm("Jeste li sigurni?");
         if (confirmed) {
           try {
-            const response = await RequestHandler.deleteRequest(SPRING_URL.concat(`/report/delete/${id}`));
-            console.log("Report deleted successfully:", id);
+            await RequestHandler.deleteRequest(SPRING_URL.concat(`/report/delete/${id}`));
             this.reports = this.reports.filter(report => report.idReport !== id);
-          } catch (error) {
-            console.error("Error deleting report:", error);
+          } catch {
           }
         }
       },
@@ -127,8 +119,8 @@
         return new Date(date).toLocaleDateString("hr-HR");
       },
       navigateToEditPage(id) {
-      this.$router.push({ name: 'EditReport', params: { id: id } });
-    }
+        this.$router.push({ name: 'EditReport', params: { id: id } });
+      }
     },
   };
   </script>
