@@ -10,8 +10,8 @@ COPY . .
 # Build the application
 RUN mvn clean install -DskipTests
 
-# Use the official OpenJDK 17 base image for running
-FROM openjdk:17-jdk-slim
+# Use Eclipse Temurin JRE 17 for running
+FROM eclipse-temurin:17-jre
 
 # Set the working directory in the container
 WORKDIR /app
